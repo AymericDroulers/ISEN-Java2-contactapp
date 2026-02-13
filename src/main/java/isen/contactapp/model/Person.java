@@ -1,24 +1,24 @@
 package isen.contactapp.model;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 
-public class person {
+public class Person {
     private int idPerson;
-    private String lastname;
-    private String firstname;
-    private String nickname;
+    private String lastName;
+    private String firstName;
+    private String nickName;
     private String phone_number;
     private String address;
     private String email_address;
-    private Date birth_date;
+    private LocalDate birth_date;
 
 
-    public person(int idPerson, String lastname, String firstname, String nickname, String phone_number, String address, String email_address, Date birth_date) {
+    public Person(int idPerson, String lastname, String firstname, String nickname, String phone_number, String address, String email_address, LocalDate birth_date) {
         this.idPerson = idPerson;
-        this.lastname = lastname;
-        this.firstname = firstname;
-        this.nickname = nickname;
+        this.lastName = lastname;
+        this.firstName = firstname;
+        this.nickName = nickname;
         this.phone_number = phone_number;
         this.address = address;
         this.email_address = email_address;
@@ -33,28 +33,28 @@ public class person {
         this.idPerson = idPerson;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getPhone_number() {
@@ -81,11 +81,11 @@ public class person {
         this.email_address = email_address;
     }
 
-    public Date getBirth_date() {
+    public LocalDate getBirth_date() {
         return birth_date;
     }
 
-    public void setBirth_date(Date birth_date) {
+    public void setBirth_date(LocalDate birth_date) {
         this.birth_date = birth_date;
     }
 }
