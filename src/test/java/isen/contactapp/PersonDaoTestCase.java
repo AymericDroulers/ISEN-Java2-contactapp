@@ -4,23 +4,26 @@ import isen.contactapp.model.Person;
 import isen.contactapp.model.PersonDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonDaoTestCase {
 
     private final PersonDao personDao = new PersonDao("jdbc:sqlite:sqlitetest.db");
+    private final String url="jdbc:sqlite:sqlitetest.db";
 
     @BeforeEach
     public void setUp() throws Exception {
-
-
 
         Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
         Statement statement = connection.createStatement();
@@ -44,5 +47,23 @@ public class PersonDaoTestCase {
                 tuple("Lucas","Dupont","Ludu")
         );
 
+    }
+
+    @Test 
+    public void shouldCreatePerson() throws SQLException {
+    	// WHEN 
+    	Person person=new Person(2, "Scheving", "Hekla", "Hekli", "83902302", "Lille", "hekla@gmail.com", LocalDate.of(2001, 9, 22));
+		personDao.createPerson(person);
+		// THEN
+		Connection connection = DriverManager.getConnection(url);
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE lastname='Scheving'");
+		assertThat(resultSet.next()).isTrue();
+		assertThat(resultSet.getInt("idPerson")).isNotNull();
+		assertThat(resultSet.getString("firstname")).isEqualTo("Hekla");
+		assertThat(resultSet.next()).isFalse();
+		resultSet.close();
+		statement.close();
+		connection.close();
     }
 }

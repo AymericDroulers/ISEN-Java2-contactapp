@@ -24,6 +24,8 @@ public class Person {
         this.email_address = email_address;
         this.birth_date = birth_date;
     }
+    
+    public Person(){}
 
     public int getIdPerson() {
         return idPerson;
