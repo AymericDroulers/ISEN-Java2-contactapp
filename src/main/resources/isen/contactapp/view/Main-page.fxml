@@ -1,31 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isen.contactapp.view.MainPageController">
    <children>
-      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="195.60001220703126" minHeight="10.0" prefHeight="61.19999160766602" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="339.60000839233396" minHeight="10.0" prefHeight="339.60000839233396" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
+      <SplitPane dividerPositions="0.13099041533546327, 0.23003194888178913" orientation="VERTICAL" prefHeight="400.0" prefWidth="604.0">
+        <items>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My contacts" textAlignment="CENTER" wrappingWidth="601.4390869140625">
                <font>
                   <Font name="Corbel" size="38.0" />
                </font>
             </Text>
             <Button mnemonicParsing="false" onAction="#updatePersonList" text="Button" />
-         </children>
-      </GridPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <SplitPane>
+                     <items>
+                        <TableView fx:id="personTable" prefHeight="230.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn fx:id="personColumn" prefWidth="75.0" text="People" />
+                          </columns>
+                        </TableView>
+                     </items>
+                  </SplitPane>
+                  <AnchorPane fx:id="formPane" layoutX="231.0" layoutY="7.0" prefHeight="296.0" prefWidth="295.0">
+                     <children>
+                        <TextField fx:id="lastNameField" layoutX="12.0" layoutY="17.0" />
+                        <TextField fx:id="firstNameField" layoutX="12.0" layoutY="59.0" />
+                        <TextField fx:id="addressField" layoutX="12.0" layoutY="142.0" />
+                        <TextField fx:id="phoneNumberField" layoutX="12.0" layoutY="184.0" />
+                        <TextField fx:id="emailAddressField" layoutX="12.0" layoutY="226.0" />
+                        <Label layoutX="13.0" text="Last Name" />
+                        <Label layoutX="14.0" layoutY="42.0" text="First name" />
+                        <Label layoutX="12.0" layoutY="125.0" text="Address" />
+                        <Label layoutX="12.0" layoutY="167.0" text="Phone number" />
+                        <Label layoutX="12.0" layoutY="209.0" text="Email address" />
+                        <Button onAction="#handleSaveButton" layoutX="183.0" layoutY="271.0" mnemonicParsing="false" text="Save" />
+                        <Label layoutX="13.0" layoutY="84.0" text="Nickname" />
+                        <TextField fx:id="nicknameField" layoutX="12.0" layoutY="101.0" />
+                        <Label layoutX="13.0" layoutY="253.0" text="Birthday" />
+                        <DatePicker fx:id="dateField" layoutY="271.0" />
+                        <Button onAction="#handleDeleteButton" layoutX="237.0" layoutY="271.0" mnemonicParsing="false" text="Delete" />
+                     </children>
+                  </AnchorPane>
+                  <Button layoutX="49.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleCreatePersonButton" text="Add New Person" />
+                   </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>

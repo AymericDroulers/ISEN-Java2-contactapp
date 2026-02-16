@@ -29,6 +29,10 @@ public class App extends Application {
         stage.setTitle("Contact App");
         stage.show();
     }
+    
+    public static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
+    }
 
 
     @Override

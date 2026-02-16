@@ -4,6 +4,8 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class PersonDao {
 
@@ -41,8 +43,8 @@ public class PersonDao {
 
 
 
-    public List<Person> getAllPersons(){
-        List<Person> persons = new ArrayList<>();
+    public ObservableList<Person> getAllPersons(){
+        ObservableList<Person> persons = FXCollections.observableArrayList();
         try(Connection connection = DriverManager.getConnection(url)){
             try(Statement statement = connection.createStatement()){
                 try(ResultSet results = statement.executeQuery("SELECT  * FROM person")){
