@@ -4,11 +4,14 @@ import isen.contactapp.model.Person;
 import isen.contactapp.model.PersonDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
@@ -44,5 +47,23 @@ public class PersonDaoTestCase {
                 tuple("Dupont","Lucas","Ludu","0612345678","43 bvd Vauban","ludu@ik.me",LocalDate.of(1985,6,6))
         );
 
+    }
+
+    @Test
+    public void shouldCreatePerson() throws SQLException {
+    	// WHEN
+    	Person person=new Person(2, "Scheving", "Hekla", "Hekli", "83902302", "Lille", "hekla@gmail.com", LocalDate.of(2001, 9, 22));
+		personDao.createPerson(person);
+		// THEN
+		Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE lastname='Scheving'");
+		assertThat(resultSet.next()).isTrue();
+		assertThat(resultSet.getInt("idPerson")).isNotNull();
+		assertThat(resultSet.getString("firstname")).isEqualTo("Hekla");
+		assertThat(resultSet.next()).isFalse();
+		resultSet.close();
+		statement.close();
+		connection.close();
     }
 }
