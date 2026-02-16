@@ -20,7 +20,6 @@ public class PersonDao {
             try(Statement statement = connection.createStatement()){
                 try(ResultSet results = statement.executeQuery("SELECT  * FROM person")){
                     while(results.next()){
-                        System.out.println(results.getInt("idperson"));
                         persons.add(new Person(
                             results.getInt("idperson"),
                                 results.getString("lastname"),

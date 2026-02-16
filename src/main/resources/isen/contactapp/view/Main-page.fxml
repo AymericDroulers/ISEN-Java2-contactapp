@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,8 +24,7 @@
                   <Font name="Corbel" size="38.0" />
                </font>
             </Text>
-            <ListView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" text="Button" />
+            <Button mnemonicParsing="false" onAction="#updatePersonList" text="Button" />
          </children>
       </GridPane>
    </children>
