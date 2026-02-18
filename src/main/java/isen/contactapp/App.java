@@ -29,6 +29,10 @@ public class App extends Application {
         stage.setTitle("Contact App");
         stage.show();
     }
+    
+    public static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
+    }
 
 
     @Override
@@ -41,7 +45,7 @@ public class App extends Application {
             Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlite.db");
             Statement statement = connection.createStatement();
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS person (idperson INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,lastname VARCHAR(45) NOT NULL,firstname VARCHAR(45) NOT NULL,nickname VARCHAR(45) NOT NULL,phone_number VARCHAR(15) NULL,address VARCHAR(200) NULL,email_address VARCHAR(150) NULL,birth_date DATE NULL); ");
-            statement.executeUpdate("INSERT INTO person(lastname,firstname,nickname,phone_number,address,email_address,birth_date) VALUES ('Aymeric','Droulers','Riric','0612345678','42 bvd Vauban','aymeric.droulers@student.junia.com','2004-12-29');");
+            statement.executeUpdate("INSERT INTO person(lastname,firstname,nickname,phone_number,address,email_address,birth_date) VALUES ('Droulers','Aymeric','Riric','0612345678','42 bvd Vauban','aymeric.droulers@student.junia.com','2004-12-29');");
             connection.close();
         }catch (SQLException e){
             throw new RuntimeException(e);
