@@ -66,4 +66,150 @@ public class PersonDaoTestCase {
 		statement.close();
 		connection.close();
     }
+    
+    @Test
+    public void shouldUpdatePerson() throws SQLException {
+        // GIVEN - Récupérer une personne existante
+        List<Person> persons = personDao.getAllPersons();
+        Person personToUpdate = persons.get(0); // Aymeric Droulers
+        int originalId = personToUpdate.getIdPerson();
+        
+        // WHEN - Modifier la personne
+        personToUpdate.setFirstName("Aymeric-Updated");
+        personToUpdate.setNickName("Riric2");
+        personToUpdate.setPhone_number("0698765432");
+        personToUpdate.setEmail_address("aymeric.updated@junia.com");
+        
+        personDao.updatePerson(personToUpdate);
+        
+        // THEN - Vérifier en base de données
+        Connection connection = DriverManager.getConnection(url);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE idperson=" + originalId);
+        
+        assertThat(resultSet.next()).isTrue();
+        assertThat(resultSet.getInt("idperson")).isEqualTo(originalId);
+        assertThat(resultSet.getString("firstname")).isEqualTo("Aymeric-Updated");
+        assertThat(resultSet.getString("nickname")).isEqualTo("Riric2");
+        assertThat(resultSet.getString("phone_number")).isEqualTo("0698765432");
+        assertThat(resultSet.getString("email_address")).isEqualTo("aymeric.updated@junia.com");
+        assertThat(resultSet.getString("lastname")).isEqualTo("Aymeric"); // Unchanged
+        assertThat(resultSet.next()).isFalse();
+        
+        resultSet.close();
+        statement.close();
+        connection.close();
+    }
+
+    @Test
+    public void shouldUpdatePersonWithNullValues() throws SQLException {
+        // GIVEN - Récupérer une personne existante
+        List<Person> persons = personDao.getAllPersons();
+        Person personToUpdate = persons.get(1); // Lucas Dupont
+        int originalId = personToUpdate.getIdPerson();
+        
+        // WHEN - Mettre à jour avec des valeurs null
+        personToUpdate.setPhone_number(null);
+        personToUpdate.setAddress(null);
+        personToUpdate.setEmail_address(null);
+        personToUpdate.setBirth_date(null);
+        
+        personDao.updatePerson(personToUpdate);
+        
+        // THEN - Vérifier que les champs sont bien null
+        Connection connection = DriverManager.getConnection(url);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE idperson=" + originalId);
+        
+        assertThat(resultSet.next()).isTrue();
+        assertThat(resultSet.getString("phone_number")).isNull();
+        assertThat(resultSet.getString("address")).isNull();
+        assertThat(resultSet.getString("email_address")).isNull();
+        assertThat(resultSet.getDate("birth_date")).isNull();
+        
+        // Les champs requis restent présents
+        assertThat(resultSet.getString("lastname")).isEqualTo("Lucas");
+        assertThat(resultSet.getString("firstname")).isEqualTo("Dupont");
+        assertThat(resultSet.getString("nickname")).isEqualTo("Ludu");
+        
+        resultSet.close();
+        statement.close();
+        connection.close();
+    }
+
+    @Test
+    public void shouldUpdateOnlyTargetedPerson() throws SQLException {
+        // GIVEN - Deux personnes en base
+        List<Person> persons = personDao.getAllPersons();
+        Person person1 = persons.get(0); // Aymeric
+        Person person2 = persons.get(1); // Lucas
+        
+        // WHEN - Modifier seulement person1
+        person1.setFirstName("Modified");
+        personDao.updatePerson(person1);
+        
+        // THEN - Vérifier que seul person1 a changé
+        Connection connection = DriverManager.getConnection(url);
+        Statement statement = connection.createStatement();
+        
+        // Vérifier person1 modifiée
+        ResultSet resultSet1 = statement.executeQuery("SELECT * FROM person WHERE idperson=" + person1.getIdPerson());
+        assertThat(resultSet1.next()).isTrue();
+        assertThat(resultSet1.getString("firstname")).isEqualTo("Modified");
+        resultSet1.close();
+        
+        // Vérifier person2 inchangée
+        ResultSet resultSet2 = statement.executeQuery("SELECT * FROM person WHERE idperson=" + person2.getIdPerson());
+        assertThat(resultSet2.next()).isTrue();
+        assertThat(resultSet2.getString("firstname")).isEqualTo("Dupont"); // Inchangé
+        resultSet2.close();
+        
+        statement.close();
+        connection.close();
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenUpdatingNonExistentPerson() {
+        // GIVEN - Une personne avec un ID inexistant
+        Person fakePerson = new Person(99999, "Ghost", "Phantom", "Boo", null, null, null, null);
+        
+        // WHEN & THEN - Vérifier qu'une exception est levée
+        org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+            personDao.updatePerson(fakePerson);
+        });
+    }
+
+    @Test
+    public void shouldUpdatePersonMultipleTimes() throws SQLException {
+        // GIVEN - Une personne existante
+        List<Person> persons = personDao.getAllPersons();
+        Person person = persons.get(0);
+        int originalId = person.getIdPerson();
+        
+        // WHEN - Plusieurs mises à jour successives
+        person.setPhone_number("0611111111");
+        personDao.updatePerson(person);
+        
+        person.setAddress("New Address 1");
+        personDao.updatePerson(person);
+        
+        person.setEmail_address("new.email@test.com");
+        personDao.updatePerson(person);
+        
+        // THEN - Vérifier que toutes les modifications sont présentes
+        Connection connection = DriverManager.getConnection(url);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE idperson=" + originalId);
+        
+        assertThat(resultSet.next()).isTrue();
+        assertThat(resultSet.getString("phone_number")).isEqualTo("0611111111");
+        assertThat(resultSet.getString("address")).isEqualTo("New Address 1");
+        assertThat(resultSet.getString("email_address")).isEqualTo("new.email@test.com");
+        
+        resultSet.close();
+        statement.close();
+        connection.close();
+    }
+    
+
 }
