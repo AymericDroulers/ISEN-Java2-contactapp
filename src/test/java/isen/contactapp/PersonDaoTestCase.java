@@ -83,7 +83,7 @@ public class PersonDaoTestCase {
         personDao.updatePerson(personToUpdate);
         
         // THEN - Vérifier en base de données
-        Connection connection = DriverManager.getConnection(url);
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE idperson=" + originalId);
         
@@ -93,7 +93,7 @@ public class PersonDaoTestCase {
         assertThat(resultSet.getString("nickname")).isEqualTo("Riric2");
         assertThat(resultSet.getString("phone_number")).isEqualTo("0698765432");
         assertThat(resultSet.getString("email_address")).isEqualTo("aymeric.updated@junia.com");
-        assertThat(resultSet.getString("lastname")).isEqualTo("Aymeric"); // Unchanged
+        assertThat(resultSet.getString("lastname")).isEqualTo("Droulers");
         assertThat(resultSet.next()).isFalse();
         
         resultSet.close();
@@ -117,7 +117,7 @@ public class PersonDaoTestCase {
         personDao.updatePerson(personToUpdate);
         
         // THEN - Vérifier que les champs sont bien null
-        Connection connection = DriverManager.getConnection(url);
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE idperson=" + originalId);
         
@@ -128,8 +128,8 @@ public class PersonDaoTestCase {
         assertThat(resultSet.getDate("birth_date")).isNull();
         
         // Les champs requis restent présents
-        assertThat(resultSet.getString("lastname")).isEqualTo("Lucas");
-        assertThat(resultSet.getString("firstname")).isEqualTo("Dupont");
+        assertThat(resultSet.getString("lastname")).isEqualTo("Dupont");  
+        assertThat(resultSet.getString("firstname")).isEqualTo("Lucas");  
         assertThat(resultSet.getString("nickname")).isEqualTo("Ludu");
         
         resultSet.close();
@@ -149,7 +149,7 @@ public class PersonDaoTestCase {
         personDao.updatePerson(person1);
         
         // THEN - Vérifier que seul person1 a changé
-        Connection connection = DriverManager.getConnection(url);
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
         Statement statement = connection.createStatement();
         
         // Vérifier person1 modifiée
@@ -197,7 +197,7 @@ public class PersonDaoTestCase {
         personDao.updatePerson(person);
         
         // THEN - Vérifier que toutes les modifications sont présentes
-        Connection connection = DriverManager.getConnection(url);
+        Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE idperson=" + originalId);
         

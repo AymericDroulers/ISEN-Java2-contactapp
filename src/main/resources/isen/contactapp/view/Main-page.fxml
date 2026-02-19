@@ -1,61 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="isen.contactapp.view.MainPageController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" 
+            prefHeight="600.0" prefWidth="800.0" 
+            xmlns="http://javafx.com/javafx/25" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="isen.contactapp.view.MainPageController">
+   
    <children>
-      <SplitPane dividerPositions="0.13099041533546327, 0.23003194888178913" orientation="VERTICAL" prefHeight="400.0" prefWidth="604.0">
-        <items>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My contacts" textAlignment="CENTER" wrappingWidth="601.4390869140625">
-               <font>
-                  <Font name="Corbel" size="38.0" />
-               </font>
-            </Text>
-            <Button mnemonicParsing="false" onAction="#updatePersonList" text="Button" />
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <SplitPane>
-                     <items>
-                        <TableView fx:id="personTable" prefHeight="230.0" prefWidth="200.0">
-                          <columns>
-                            <TableColumn fx:id="personColumn" prefWidth="75.0" text="People" />
-                          </columns>
-                        </TableView>
-                     </items>
-                  </SplitPane>
-                  <AnchorPane fx:id="formPane" layoutX="231.0" layoutY="7.0" prefHeight="296.0" prefWidth="295.0">
-                     <children>
-                        <TextField fx:id="lastNameField" layoutX="12.0" layoutY="17.0" />
-                        <TextField fx:id="firstNameField" layoutX="12.0" layoutY="59.0" />
-                        <TextField fx:id="addressField" layoutX="12.0" layoutY="142.0" />
-                        <TextField fx:id="phoneNumberField" layoutX="12.0" layoutY="184.0" />
-                        <TextField fx:id="emailAddressField" layoutX="12.0" layoutY="226.0" />
-                        <Label layoutX="13.0" text="Last Name" />
-                        <Label layoutX="14.0" layoutY="42.0" text="First name" />
-                        <Label layoutX="12.0" layoutY="125.0" text="Address" />
-                        <Label layoutX="12.0" layoutY="167.0" text="Phone number" />
-                        <Label layoutX="12.0" layoutY="209.0" text="Email address" />
-                        <Button onAction="#handleSaveButton" layoutX="183.0" layoutY="271.0" mnemonicParsing="false" text="Save" />
-                        <Label layoutX="13.0" layoutY="84.0" text="Nickname" />
-                        <TextField fx:id="nicknameField" layoutX="12.0" layoutY="101.0" />
-                        <Label layoutX="13.0" layoutY="253.0" text="Birthday" />
-                        <DatePicker fx:id="dateField" layoutY="271.0" />
-                        <Button onAction="#handleDeleteButton" layoutX="237.0" layoutY="271.0" mnemonicParsing="false" text="Delete" />
-                     </children>
-                  </AnchorPane>
-                  <Button layoutX="49.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleCreatePersonButton" text="Add New Person" />
-                   </children>
-            </AnchorPane>
-        </items>
+      <!-- Header -->
+      <VBox spacing="10" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+         <padding>
+            <Insets top="10" bottom="10" left="10" right="10"/>
+         </padding>
+         
+         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My Contacts" textAlignment="CENTER">
+            <font>
+               <Font name="Corbel" size="38.0" />
+            </font>
+         </Text>
+      </VBox>
+      
+      <!-- Main Content -->
+      <SplitPane dividerPositions="0.35" 
+                 AnchorPane.topAnchor="80" 
+                 AnchorPane.bottomAnchor="0" 
+                 AnchorPane.leftAnchor="0" 
+                 AnchorPane.rightAnchor="0">
+        
+        <!-- Left Side: Person List -->
+        <AnchorPane minWidth="200" prefWidth="250">
+           <VBox spacing="10" AnchorPane.topAnchor="10" AnchorPane.bottomAnchor="10" 
+                 AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+              
+              <Label text="People" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+              
+              <TableView fx:id="personTable" VBox.vgrow="ALWAYS">
+                <columns>
+                  <TableColumn fx:id="personColumn" prefWidth="220" text="Name" />
+                </columns>
+              </TableView>
+              
+              <Button text="Add New Person" onAction="#handleCreatePersonButton" 
+                      maxWidth="Infinity" style="-fx-font-size: 14;"/>
+           </VBox>
+        </AnchorPane>
+        
+        <!-- Right Side: Person Details Form -->
+        <AnchorPane fx:id="formPane" minWidth="400" prefWidth="500" visible="false">
+           <ScrollPane fitToWidth="true" 
+                       AnchorPane.topAnchor="0" 
+                       AnchorPane.bottomAnchor="0" 
+                       AnchorPane.leftAnchor="0" 
+                       AnchorPane.rightAnchor="0">
+              <VBox spacing="15">
+                 <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                 </padding>
+                 
+                 <Label text="Person Details" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+                 
+                 <!-- Last Name -->
+                 <VBox spacing="5">
+                    <Label text="Last Name *" />
+                    <TextField fx:id="lastNameField" promptText="Enter last name"/>
+                 </VBox>
+                 
+                 <!-- First Name -->
+                 <VBox spacing="5">
+                    <Label text="First Name *" />
+                    <TextField fx:id="firstNameField" promptText="Enter first name"/>
+                 </VBox>
+                 
+                 <!-- Nickname -->
+                 <VBox spacing="5">
+                    <Label text="Nickname *" />
+                    <TextField fx:id="nicknameField" promptText="Enter nickname"/>
+                 </VBox>
+                 
+                 <!-- Phone Number -->
+                 <VBox spacing="5">
+                    <Label text="Phone Number" />
+                    <TextField fx:id="phoneNumberField" promptText="Enter phone number"/>
+                 </VBox>
+                 
+                 <!-- Address -->
+                 <VBox spacing="5">
+                    <Label text="Address" />
+                    <TextField fx:id="addressField" promptText="Enter address"/>
+                 </VBox>
+                 
+                 <!-- Email -->
+                 <VBox spacing="5">
+                    <Label text="Email Address" />
+                    <TextField fx:id="emailAddressField" promptText="Enter email"/>
+                 </VBox>
+                 
+                 <!-- Birth Date -->
+                 <VBox spacing="5">
+                    <Label text="Birth Date" />
+                    <DatePicker fx:id="dateField" promptText="Select birth date" maxWidth="Infinity"/>
+                 </VBox>
+                 
+                 <!-- Spacer -->
+                 <Region minHeight="20"/>
+                 
+                 <!-- Buttons -->
+                 <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Button text="Save" onAction="#handleSaveButton" 
+                            prefWidth="100" prefHeight="40"
+                            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
+                    <Button text="Delete" onAction="#handleDeleteButton" 
+                            prefWidth="100" prefHeight="40"
+                            style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
+                 </HBox>
+                 
+              </VBox>
+           </ScrollPane>
+        </AnchorPane>
+        
       </SplitPane>
    </children>
 </AnchorPane>

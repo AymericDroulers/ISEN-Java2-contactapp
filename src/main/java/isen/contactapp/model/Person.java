@@ -90,4 +90,14 @@ public class Person {
     public void setBirth_date(LocalDate birth_date) {
         this.birth_date = birth_date;
     }
+    
+    
+    
+    /**
+     * Returns the full name of the person.
+     * @return firstName + " " + lastName
+     */
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }

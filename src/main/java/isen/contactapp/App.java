@@ -64,4 +64,15 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
+    
+    
+    private static Person selectedPerson;
+
+    public static void setSelectedPerson(Person person) {
+        selectedPerson = person;
+    }
+
+    public static Person getSelectedPerson() {
+        return selectedPerson;
+    }
 }

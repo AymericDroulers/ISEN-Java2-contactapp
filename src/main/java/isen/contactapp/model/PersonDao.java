@@ -141,7 +141,24 @@ public class PersonDao {
         }
     }
     
+    public void deletePerson(int id) {
+        String query = "DELETE FROM person WHERE idperson = ?";
+        
+        try (Connection connection = DriverManager.getConnection(url);
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            
+            statement.setInt(1, id);
+            int rowsAffected = statement.executeUpdate();
+            
+            if (rowsAffected == 0) {
+                throw new RuntimeException("Delete failed - person not found with ID: " + id);
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to delete person: " + e.getMessage(), e);
+        }
     
     
+    }
     
 }
