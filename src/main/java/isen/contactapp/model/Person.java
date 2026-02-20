@@ -2,27 +2,29 @@ package isen.contactapp.model;
 
 
 import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Person {
     private int idPerson;
     private String lastName;
     private String firstName;
     private String nickName;
-    private String phone_number;
+    private String phoneNumber;
     private String address;
-    private String email_address;
-    private LocalDate birth_date;
+    private String emailAddress;
+    private LocalDate birthDate;
 
 
-    public Person(int idPerson, String lastname, String firstname, String nickname, String phone_number, String address, String email_address, LocalDate birth_date) {
+    public Person(int idPerson, String lastname, String firstname, String nickname, String phoneNumber, String address, String emailAddress, LocalDate birthDate) {
         this.idPerson = idPerson;
         this.lastName = lastname;
         this.firstName = firstname;
         this.nickName = nickname;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
         this.address = address;
-        this.email_address = email_address;
-        this.birth_date = birth_date;
+        this.emailAddress = emailAddress;
+        this.birthDate = birthDate;
     }
     
     public Person(){}
@@ -40,6 +42,10 @@ public class Person {
     }
 
     public void setLastName(String lastName) {
+        if(lastName == null || lastName.isBlank()){
+            throw new IllegalArgumentException("lastName cannot be null or empty");
+        }
+        lastName = lastName.strip();
         this.lastName = lastName;
     }
 
@@ -48,6 +54,10 @@ public class Person {
     }
 
     public void setFirstName(String firstName) {
+        if(firstName == null || firstName.isBlank()){
+            throw new IllegalArgumentException("firstName cannot be null or empty");
+        }
+        firstName=firstName.strip();
         this.firstName = firstName;
     }
 
@@ -56,15 +66,27 @@ public class Person {
     }
 
     public void setNickName(String nickName) {
+        if(nickName == null || nickName.isBlank()){
+            throw new IllegalArgumentException("nickName cannot be null or empty");
+        }
+        nickName = nickName.strip();
         this.nickName = nickName;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        if(nickName == null || nickName.isBlank()){
+            throw new IllegalArgumentException("nickName cannot be null or empty");
+        }
+        Pattern pattern = Pattern.compile("^\\d{10}$");
+        Matcher matcher = pattern.matcher(phoneNumber);
+        if(!matcher.find()){
+            throw new IllegalArgumentException("phone number is invalid");
+        }
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {
@@ -72,23 +94,43 @@ public class Person {
     }
 
     public void setAddress(String address) {
+        address=address.strip();
         this.address = address;
     }
 
-    public String getEmail_address() {
-        return email_address;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setEmail_address(String email_address) {
-        this.email_address = email_address;
+    public void setEmailAddress(String emailAddress) {
+
+        if(emailAddress == null || emailAddress.isBlank()){
+            this.emailAddress = "";
+            return;
+        }
+        emailAddress = emailAddress.trim();
+        Pattern pattern = Pattern.compile("^[A-z]+\\.[A-z]+@[A-z]+\\.[A-z.]+$");
+        Matcher matcher = pattern.matcher(emailAddress);
+        if(!matcher.find()){
+            throw new IllegalArgumentException("email address is invalid");
+        }
+        this.emailAddress = emailAddress;
     }
 
-    public LocalDate getBirth_date() {
-        return birth_date;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirth_date(LocalDate birth_date) {
-        this.birth_date = birth_date;
+    public void setBirthDate(LocalDate birthDate)
+    {
+        if(birthDate == null){
+            this.birthDate = null;
+            return;
+        }
+        if(birthDate.isAfter(LocalDate.now())){
+            throw new IllegalArgumentException("birthDate cannot be after now");
+        }
+        this.birthDate = birthDate;
     }
     
     

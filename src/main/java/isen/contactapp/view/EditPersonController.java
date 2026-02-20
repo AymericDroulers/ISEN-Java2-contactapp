@@ -36,10 +36,10 @@ public class EditPersonController {
             lastNameField.setText(person.getLastName());
             firstNameField.setText(person.getFirstName());
             nicknameField.setText(person.getNickName());
-            phoneNumberField.setText(person.getPhone_number());
+            phoneNumberField.setText(person.getPhoneNumber());
             addressField.setText(person.getAddress());
-            emailAddressField.setText(person.getEmail_address());
-            dateField.setValue(person.getBirth_date());
+            emailAddressField.setText(person.getEmailAddress());
+            dateField.setValue(person.getBirthDate());
         }
     }
     
@@ -58,10 +58,10 @@ public class EditPersonController {
             person.setLastName(lastNameField.getText().trim());
             person.setFirstName(firstNameField.getText().trim());
             person.setNickName(nicknameField.getText().trim());
-            person.setPhone_number(phoneNumberField.getText().trim());
+            person.setPhoneNumber(phoneNumberField.getText().trim());
             person.setAddress(addressField.getText().trim());
-            person.setEmail_address(emailAddressField.getText().trim());
-            person.setBirth_date(dateField.getValue());
+            person.setEmailAddress(emailAddressField.getText().trim());
+            person.setBirthDate(dateField.getValue());
             
             
             if (person.getLastName().isEmpty() || 

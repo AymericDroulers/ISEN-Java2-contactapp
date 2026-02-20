@@ -1,17 +1,13 @@
 package isen.contactapp.view;
 
 import java.io.IOException;
-import java.util.List;
 
 import isen.contactapp.App;
 import isen.contactapp.model.Person;
 import isen.contactapp.model.PersonDao;
-import isen.contactapp.util.PersonValueFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -54,9 +50,9 @@ public class CreatePersonController {
     	newPerson.setFirstName(firstNameField.getText());
     	newPerson.setNickName(nicknameField.getText());
     	newPerson.setAddress(addressField.getText());
-    	newPerson.setPhone_number(phoneNumberField.getText());
-    	newPerson.setBirth_date(dateField.getValue());
-    	newPerson.setEmail_address(emailAddressField.getText());
+    	newPerson.setPhoneNumber(phoneNumberField.getText());
+    	newPerson.setBirthDate(dateField.getValue());
+    	newPerson.setEmailAddress(emailAddressField.getText());
     	personDao.createPerson(newPerson);
     	
     	try {

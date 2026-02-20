@@ -27,8 +27,8 @@ public class PersonDaoTestCase {
 
         Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
         Statement statement = connection.createStatement();
-        statement.executeUpdate("DELETE FROM person");
         statement.executeUpdate("CREATE TABLE IF NOT EXISTS person (idperson INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,lastname VARCHAR(45) NOT NULL,firstname VARCHAR(45) NOT NULL,nickname VARCHAR(45) NOT NULL,phone_number VARCHAR(15) NULL,address VARCHAR(200) NULL,email_address VARCHAR(150) NULL,birth_date DATE NULL); ");
+        statement.executeUpdate("DELETE FROM person");
         statement.executeUpdate("INSERT INTO person(lastname,firstname,nickname,phone_number,address,email_address,birth_date) VALUES ('Droulers','Aymeric','Riric','0612345678','42 bvd Vauban','aymeric.droulers@student.junia.com','2004-12-29');");
         statement.executeUpdate("INSERT INTO person(lastname,firstname,nickname,phone_number,address,email_address,birth_date) VALUES ('Dupont','Lucas','Ludu','0612345678','43 bvd Vauban','ludu@ik.me','1985-06-06');");
         statement.close();
@@ -42,7 +42,7 @@ public class PersonDaoTestCase {
 
         //THEN
         assertThat(persons).hasSize(2);
-        assertThat(persons).extracting(Person::getLastName,Person::getFirstName,Person::getNickName, Person::getPhone_number, Person::getAddress, Person::getEmail_address,Person::getBirth_date).containsOnly(
+        assertThat(persons).extracting(Person::getLastName,Person::getFirstName,Person::getNickName, Person::getPhoneNumber, Person::getAddress, Person::getEmailAddress,Person::getBirthDate).containsOnly(
                 tuple("Droulers","Aymeric","Riric","0612345678","42 bvd Vauban","aymeric.droulers@student.junia.com", LocalDate.of(2004,12,29)),
                 tuple("Dupont","Lucas","Ludu","0612345678","43 bvd Vauban","ludu@ik.me",LocalDate.of(1985,6,6))
         );
@@ -77,8 +77,8 @@ public class PersonDaoTestCase {
         // WHEN - Modifier la personne
         personToUpdate.setFirstName("Aymeric-Updated");
         personToUpdate.setNickName("Riric2");
-        personToUpdate.setPhone_number("0698765432");
-        personToUpdate.setEmail_address("aymeric.updated@junia.com");
+        personToUpdate.setPhoneNumber("0698765432");
+        personToUpdate.setEmailAddress("aymeric.updated@junia.com");
         
         personDao.updatePerson(personToUpdate);
         
@@ -109,10 +109,10 @@ public class PersonDaoTestCase {
         int originalId = personToUpdate.getIdPerson();
         
         // WHEN - Mettre à jour avec des valeurs null
-        personToUpdate.setPhone_number(null);
+        personToUpdate.setPhoneNumber(null);
         personToUpdate.setAddress(null);
-        personToUpdate.setEmail_address(null);
-        personToUpdate.setBirth_date(null);
+        personToUpdate.setEmailAddress(null);
+        personToUpdate.setBirthDate(null);
         
         personDao.updatePerson(personToUpdate);
         
@@ -161,7 +161,7 @@ public class PersonDaoTestCase {
         // Vérifier person2 inchangée
         ResultSet resultSet2 = statement.executeQuery("SELECT * FROM person WHERE idperson=" + person2.getIdPerson());
         assertThat(resultSet2.next()).isTrue();
-        assertThat(resultSet2.getString("firstname")).isEqualTo("Dupont"); // Inchangé
+        assertThat(resultSet2.getString("firstname")).isEqualTo("Lucas"); // Inchangé
         resultSet2.close();
         
         statement.close();
@@ -187,13 +187,13 @@ public class PersonDaoTestCase {
         int originalId = person.getIdPerson();
         
         // WHEN - Plusieurs mises à jour successives
-        person.setPhone_number("0611111111");
+        person.setPhoneNumber("0611111111");
         personDao.updatePerson(person);
         
         person.setAddress("New Address 1");
         personDao.updatePerson(person);
         
-        person.setEmail_address("new.email@test.com");
+        person.setEmailAddress("new.email@test.com");
         personDao.updatePerson(person);
         
         // THEN - Vérifier que toutes les modifications sont présentes

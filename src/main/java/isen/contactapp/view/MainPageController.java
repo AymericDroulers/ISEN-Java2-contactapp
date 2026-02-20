@@ -127,9 +127,9 @@ public class MainPageController {
             firstNameField.setText(currentPerson.getFirstName());
             nicknameField.setText(currentPerson.getNickName());
             addressField.setText(currentPerson.getAddress());
-            emailAddressField.setText(currentPerson.getEmail_address());
-            phoneNumberField.setText(currentPerson.getPhone_number());
-            dateField.setValue(currentPerson.getBirth_date());
+            emailAddressField.setText(currentPerson.getEmailAddress());
+            phoneNumberField.setText(currentPerson.getPhoneNumber());
+            dateField.setValue(currentPerson.getBirthDate());
             
             // Make fields read-only (display only)
             setFieldsEditable(false);

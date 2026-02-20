@@ -2,8 +2,7 @@ package isen.contactapp.model;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -23,14 +22,14 @@ public class PersonDao {
 				statement.setString(1,person.getLastName());
 				statement.setString(2,person.getFirstName() );
 				statement.setString(3,person.getNickName());
-				statement.setString(4, person.getPhone_number());
+				statement.setString(4, person.getPhoneNumber());
 				statement.setString(5, person.getAddress());
-				statement.setString(6, person.getEmail_address());
-				statement.setDate(7, Date.valueOf(person.getBirth_date()));
+				statement.setString(6, person.getEmailAddress());
+				statement.setDate(7, Date.valueOf(person.getBirthDate()));
 				statement.executeUpdate();
 				try (ResultSet ids = statement.getGeneratedKeys()) {
 				if(ids.next()) {
-					return new Person(ids.getInt(1), person.getLastName(), person.getFirstName(), person.getNickName(), person.getPhone_number(), person.getAddress(), person.getEmail_address(), person.getBirth_date());
+					return new Person(ids.getInt(1), person.getLastName(), person.getFirstName(), person.getNickName(), person.getPhoneNumber(), person.getAddress(), person.getEmailAddress(), person.getBirthDate());
 				}}
 			} return new Person();
 					
@@ -83,13 +82,13 @@ public class PersonDao {
             statement.setString(1, person.getLastName());
             statement.setString(2, person.getFirstName());
             statement.setString(3, person.getNickName());
-            statement.setString(4, person.getPhone_number());
+            statement.setString(4, person.getPhoneNumber());
             statement.setString(5, person.getAddress());
-            statement.setString(6, person.getEmail_address());
+            statement.setString(6, person.getEmailAddress());
             
           
-            if (person.getBirth_date() != null) {
-                statement.setDate(7, Date.valueOf(person.getBirth_date()));
+            if (person.getBirthDate() != null) {
+                statement.setDate(7, Date.valueOf(person.getBirthDate()));
             } else {
                 statement.setNull(7, Types.DATE);
             }
