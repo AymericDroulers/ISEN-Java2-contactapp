@@ -1,6 +1,10 @@
 package isen.contactapp.view;
 
 import isen.contactapp.App;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import isen.contactapp.model.Person;
 import isen.contactapp.model.PersonDao;
 import isen.contactapp.util.PersonValueFactory;
@@ -32,10 +36,13 @@ public class MainPageController {
     @FXML public DatePicker dateField;
     @FXML public TableView<Person> personTable;
     @FXML public TableColumn<Person, String> personColumn;
+    @FXML public TextField searchField;
 
     // ========== Private Fields ==========
     private Person currentPerson;
     private final PersonDao personDao = new PersonDao("jdbc:sqlite:sqlite.db");
+    private ObservableList<Person> masterList = FXCollections.observableArrayList();
+    private FilteredList<Person> filteredList;
 
     // ========== Initialization ==========
     
@@ -50,6 +57,23 @@ public class MainPageController {
         
         // Load data
         populateList();
+        
+        //search bar
+        filteredList = new FilteredList<>(masterList, person -> true);
+
+        searchField.textProperty().addListener((obs, oldVal, newVal) -> {
+            String filter = (newVal == null) ? "" : newVal.toLowerCase().trim();
+
+            filteredList.setPredicate(person -> {
+                if (filter.isEmpty()) return true;
+
+                String fn = person.getFirstName() == null ? "" : person.getFirstName().toLowerCase();
+                String ln = person.getLastName() == null ? "" : person.getLastName().toLowerCase();
+
+                return fn.contains(filter) || ln.contains(filter);
+            });
+        });
+        personTable.setItems(filteredList);
         
         // Setup selection listener
         personTable.getSelectionModel()
@@ -190,7 +214,7 @@ public class MainPageController {
     @FXML
     private void populateList() {
         try {
-            personTable.setItems(personDao.getAllPersons());
+            masterList.setAll(personDao.getAllPersons());
             personTable.refresh();
         } catch (Exception e) {
             showAlert("Load Failed", "Could not load person list: " + e.getMessage());

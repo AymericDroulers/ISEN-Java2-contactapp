@@ -45,21 +45,35 @@ public class CreatePersonController {
 
     @FXML
     private void handleSavePersonButton() {
-    	Person newPerson=new Person();
-    	newPerson.setLastName(lastNameField.getText());
-    	newPerson.setFirstName(firstNameField.getText());
-    	newPerson.setNickName(nicknameField.getText());
-    	newPerson.setAddress(addressField.getText());
-    	newPerson.setPhoneNumber(phoneNumberField.getText());
-    	newPerson.setBirthDate(dateField.getValue());
-    	newPerson.setEmailAddress(emailAddressField.getText());
-    	personDao.createPerson(newPerson);
-    	
-    	try {
-			App.setRoot("/isen/contactapp/view/Main-page");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            Person newPerson = new Person();
+
+            newPerson.setLastName(lastNameField.getText());
+            newPerson.setFirstName(firstNameField.getText());
+            newPerson.setNickName(nicknameField.getText());
+            newPerson.setAddress(addressField.getText());
+            newPerson.setPhoneNumber(phoneNumberField.getText());
+            newPerson.setBirthDate(dateField.getValue());
+            newPerson.setEmailAddress(emailAddressField.getText());
+
+            personDao.createPerson(newPerson);
+
+            successMessage.setText("Person created successfully!");
+            successMessage.setStyle("-fx-text-fill: green;");
+
+            App.setRoot("/isen/contactapp/view/Main-page");
+
+        } catch (IllegalArgumentException e) {
+
+            successMessage.setText(e.getMessage());
+            successMessage.setStyle("-fx-text-fill: red;");
+            successMessage.setVisible(true);
+        } catch (Exception e) {
+            successMessage.setText("Unexpected error occurred.");
+            successMessage.setStyle("-fx-text-fill: red;");
+            e.printStackTrace();
+            successMessage.setVisible(true);
+        }
     }
     
     

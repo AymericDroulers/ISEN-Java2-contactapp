@@ -123,9 +123,11 @@ public class Person {
         
         
         emailAddress = emailAddress.trim();
-        Pattern pattern = Pattern.compile("^[A-z]+\\.[A-z]+@[A-z]+\\.[A-z.]+$");
+
+        Pattern pattern = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
         Matcher matcher = pattern.matcher(emailAddress);
-        if(!matcher.find()){
+
+        if (!matcher.matches()) {
             throw new IllegalArgumentException("email address is invalid");
         }
         this.emailAddress = emailAddress;
