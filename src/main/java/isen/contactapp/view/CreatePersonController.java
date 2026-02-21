@@ -45,6 +45,22 @@ public class CreatePersonController {
 
     @FXML
     private void handleSavePersonButton() {
+    	
+    	boolean missing =
+                lastNameField.getText() == null || lastNameField.getText().isBlank() ||
+                firstNameField.getText() == null || firstNameField.getText().isBlank() ||
+                nicknameField.getText() == null || nicknameField.getText().isBlank() ||
+                phoneNumberField.getText() == null || phoneNumberField.getText().isBlank() ||
+                addressField.getText() == null || addressField.getText().isBlank() ||
+                emailAddressField.getText() == null || emailAddressField.getText().isBlank() ||
+                dateField.getValue() == null;
+
+        if (missing) {
+            successMessage.setText("Fill all fields");
+            successMessage.setStyle("-fx-text-fill: red;");
+            successMessage.setVisible(true);
+            return;
+        }
         try {
             Person newPerson = new Person();
 
