@@ -11,8 +11,10 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 /**
- * Controller for editing an existing person.
+ * Controller for editing an existing person. EditPersonController → Page séparée (DISPONIBLE, pas utilisé)
  */
+
+
 public class EditPersonController {
     
     @FXML private TextField lastNameField;

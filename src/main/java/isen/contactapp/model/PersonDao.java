@@ -75,32 +75,51 @@ public class PersonDao {
         String query = "UPDATE person SET lastname = ?, firstname = ?, nickname = ?, " +
                        "phone_number = ?, address = ?, email_address = ?, birth_date = ? " +
                        "WHERE idperson = ?";
-        
+
         try (Connection connection = DriverManager.getConnection(url);
              PreparedStatement statement = connection.prepareStatement(query)) {
-            
+
+            // Required fields
             statement.setString(1, person.getLastName());
             statement.setString(2, person.getFirstName());
             statement.setString(3, person.getNickName());
-            statement.setString(4, person.getPhoneNumber());
-            statement.setString(5, person.getAddress());
-            statement.setString(6, person.getEmailAddress());
             
-          
+            // ✅ CORRIGER phoneNumber
+            if (person.getPhoneNumber() != null) {
+                statement.setString(4, person.getPhoneNumber());
+            } else {
+                statement.setNull(4, Types.VARCHAR);
+            }
+            
+            // ✅ CORRIGER address
+            if (person.getAddress() != null) {
+                statement.setString(5, person.getAddress());
+            } else {
+                statement.setNull(5, Types.VARCHAR);
+            }
+            
+            // ✅ CORRIGER emailAddress
+            if (person.getEmailAddress() != null) {
+                statement.setString(6, person.getEmailAddress());
+            } else {
+                statement.setNull(6, Types.VARCHAR);
+            }
+            
+            // birthDate (déjà correct)
             if (person.getBirthDate() != null) {
                 statement.setDate(7, Date.valueOf(person.getBirthDate()));
             } else {
                 statement.setNull(7, Types.DATE);
             }
-            
+
             statement.setInt(8, person.getIdPerson());
-            
+
             int rowsAffected = statement.executeUpdate();
-            
+
             if (rowsAffected == 0) {
                 throw new RuntimeException("Update failed - person not found with ID: " + person.getIdPerson());
             }
-            
+
         } catch (SQLException e) {
             throw new RuntimeException("Failed to update person: " + e.getMessage(), e);
         }

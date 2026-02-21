@@ -1,6 +1,5 @@
 package isen.contactapp.model;
 
-
 import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +13,6 @@ public class Person {
     private String address;
     private String emailAddress;
     private LocalDate birthDate;
-
 
     public Person(int idPerson, String lastname, String firstname, String nickname, String phoneNumber, String address, String emailAddress, LocalDate birthDate) {
         this.idPerson = idPerson;
@@ -57,7 +55,7 @@ public class Person {
         if(firstName == null || firstName.isBlank()){
             throw new IllegalArgumentException("firstName cannot be null or empty");
         }
-        firstName=firstName.strip();
+        firstName = firstName.strip();
         this.firstName = firstName;
     }
 
@@ -77,14 +75,20 @@ public class Person {
         return phoneNumber;
     }
 
+    
     public void setPhoneNumber(String phoneNumber) {
-        if(nickName == null || nickName.isBlank()){
-            throw new IllegalArgumentException("nickName cannot be null or empty");
+        
+        if(phoneNumber == null || phoneNumber.isBlank()){
+            this.phoneNumber = null;
+            return;
         }
+        
+
+        phoneNumber = phoneNumber.strip();
         Pattern pattern = Pattern.compile("^\\d{10}$");
         Matcher matcher = pattern.matcher(phoneNumber);
         if(!matcher.find()){
-            throw new IllegalArgumentException("phone number is invalid");
+            throw new IllegalArgumentException("phone number is invalid (must be 10 digits)");
         }
         this.phoneNumber = phoneNumber;
     }
@@ -93,8 +97,15 @@ public class Person {
         return address;
     }
 
+   
     public void setAddress(String address) {
-        address=address.strip();
+ 
+        if(address == null || address.isBlank()){
+            this.address = null;
+            return;
+        }
+        
+        address = address.strip();
         this.address = address;
     }
 
@@ -102,12 +113,15 @@ public class Person {
         return emailAddress;
     }
 
+    
     public void setEmailAddress(String emailAddress) {
-
+     
         if(emailAddress == null || emailAddress.isBlank()){
-            this.emailAddress = "";
+            this.emailAddress = null;  
             return;
         }
+        
+        
         emailAddress = emailAddress.trim();
         Pattern pattern = Pattern.compile("^[A-z]+\\.[A-z]+@[A-z]+\\.[A-z.]+$");
         Matcher matcher = pattern.matcher(emailAddress);
@@ -121,8 +135,8 @@ public class Person {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate)
-    {
+    
+    public void setBirthDate(LocalDate birthDate) {
         if(birthDate == null){
             this.birthDate = null;
             return;
@@ -132,8 +146,6 @@ public class Person {
         }
         this.birthDate = birthDate;
     }
-    
-    
     
     /**
      * Returns the full name of the person.
