@@ -91,11 +91,34 @@ public class MainPageController {
         }
         
         try {
-            // Pass the selected person to the edit page
-            App.setSelectedPerson(currentPerson);
-            App.setRoot("/isen/contactapp/view/edit-person");
-        } catch (IOException e) {
-            showAlert("Navigation Error", "Failed to open edit page: " + e.getMessage());
+            // Update person with values from form fields
+            currentPerson.setLastName(lastNameField.getText().trim());
+            currentPerson.setFirstName(firstNameField.getText().trim());
+            currentPerson.setNickName(nicknameField.getText().trim());
+            currentPerson.setPhoneNumber(phoneNumberField.getText().trim());
+            currentPerson.setAddress(addressField.getText().trim());
+            currentPerson.setEmailAddress(emailAddressField.getText().trim());
+            currentPerson.setBirthDate(dateField.getValue());
+            
+            // Validate required fields
+            if (currentPerson.getLastName().isEmpty() || 
+                currentPerson.getFirstName().isEmpty() || 
+                currentPerson.getNickName().isEmpty()) {
+                showAlert("Invalid Input", "Last name, first name, and nickname are required.");
+                return;
+            }
+            
+            // Save to database
+            personDao.updatePerson(currentPerson);
+            
+            // Show success message
+            showAlert("Success", currentPerson.getFullName() + " has been updated successfully!");
+            
+            // Refresh the list
+            populateList();
+            
+        } catch (Exception e) {
+            showAlert("Error", "Failed to update person: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -131,8 +154,8 @@ public class MainPageController {
             phoneNumberField.setText(currentPerson.getPhoneNumber());
             dateField.setValue(currentPerson.getBirthDate());
             
-            // Make fields read-only (display only)
-            setFieldsEditable(false);
+            // Make fields editable (allow editing)
+            setFieldsEditable(true);
         }
     }
 
