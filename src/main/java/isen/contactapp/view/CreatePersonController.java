@@ -92,6 +92,15 @@ public class CreatePersonController {
         }
     }
     
+    @FXML
+    private void handleBackButton() {
+        try {
+            App.setRoot("/isen/contactapp/view/Main-page");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     
     	
 }

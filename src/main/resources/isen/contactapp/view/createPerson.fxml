@@ -5,92 +5,107 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" 
-            prefHeight="600.0" prefWidth="600.0" 
-            xmlns="http://javafx.com/javafx/25" 
-            xmlns:fx="http://javafx.com/fxml/1" 
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            prefHeight="600.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="isen.contactapp.view.CreatePersonController">
-   
+
    <children>
-      <VBox spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" 
+      <VBox spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
             AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-         
-         <!-- Header -->
-         <VBox alignment="CENTER">
+
+         <!-- Header with Back Button -->
+         <HBox alignment="CENTER">
             <padding>
-               <Insets top="20" bottom="10"/>
+               <Insets top="20" bottom="10" left="20" right="20"/>
             </padding>
+            
+            <!-- Back Button (left) -->
+            <Button text="← Back" onAction="#handleBackButton" 
+                    style="-fx-font-size: 14; -fx-background-color: #f0f0f0; -fx-cursor: hand;"/>
+            
+            <!-- Title (center) -->
+            <Region HBox.hgrow="ALWAYS"/>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create Person" textAlignment="CENTER">
                <font>
                   <Font name="Corbel" size="38.0" />
                </font>
             </Text>
-         </VBox>
-         
+            <Region HBox.hgrow="ALWAYS"/>
+            
+         </HBox>
+
          <!-- Form -->
          <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
             <VBox spacing="15" alignment="CENTER">
                <padding>
                   <Insets top="20" right="40" bottom="40" left="40"/>
                </padding>
-               
+
                <!-- Last Name -->
                <VBox spacing="5" maxWidth="300">
                   <Label text="Last Name *" />
                   <TextField fx:id="lastNameField" promptText="Enter last name"/>
                </VBox>
-               
+
                <!-- First Name -->
                <VBox spacing="5" maxWidth="300">
                   <Label text="First Name *" />
                   <TextField fx:id="firstNameField" promptText="Enter first name"/>
                </VBox>
-               
+
                <!-- Nickname -->
                <VBox spacing="5" maxWidth="300">
                   <Label text="Nickname *" />
                   <TextField fx:id="nicknameField" promptText="Enter nickname"/>
                </VBox>
-               
+
                <!-- Phone Number -->
                <VBox spacing="5" maxWidth="300">
                   <Label text="Phone Number" />
                   <TextField fx:id="phoneNumberField" promptText="Enter phone number"/>
                </VBox>
-               
+
                <!-- Address -->
                <VBox spacing="5" maxWidth="300">
                   <Label text="Address" />
                   <TextField fx:id="addressField" promptText="Enter address"/>
                </VBox>
-               
+
                <!-- Email Address -->
                <VBox spacing="5" maxWidth="300">
                   <Label text="Email Address" />
                   <TextField fx:id="emailAddressField" promptText="Enter email address"/>
                </VBox>
-               
+
                <!-- Birthday -->
                <VBox spacing="5" maxWidth="300">
                   <Label text="Birthday" />
                   <DatePicker fx:id="dateField" promptText="Select birth date" maxWidth="300"/>
                </VBox>
-               
+
                <!-- Success Message -->
                <Label fx:id="successMessage" visible="false" style="-fx-text-fill: green; -fx-font-weight: bold;"/>
-               
-               <!-- Save Button -->
-               <Button text="Save" onAction="#handleSavePersonButton" 
-                       prefWidth="150" prefHeight="40"
-                       style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;">
+
+               <!-- Buttons -->
+               <HBox spacing="15" alignment="CENTER">
                   <VBox.margin>
-                     <Insets top="20"/>
+                     <Insets top="20" right="0" bottom="0" left="0"/>
                   </VBox.margin>
-               </Button>
-               
+                  
+                  <Button text="Cancel" onAction="#handleBackButton" 
+                          prefWidth="120" prefHeight="40"
+                          style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+                  
+                  <Button text="Save" onAction="#handleSavePersonButton" 
+                          prefWidth="120" prefHeight="40"
+                          style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+               </HBox>
+
             </VBox>
          </ScrollPane>
-         
+
       </VBox>
    </children>
 </AnchorPane>
