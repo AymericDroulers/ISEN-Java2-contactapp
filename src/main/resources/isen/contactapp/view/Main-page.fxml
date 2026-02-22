@@ -38,7 +38,7 @@
                  AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
               
               <Label text="People" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
-              
+              <TextField fx:id="searchField" promptText="Search..." />
               <TableView fx:id="personTable" VBox.vgrow="ALWAYS">
                 <columns>
                   <TableColumn fx:id="personColumn" prefWidth="220" text="Name" />
