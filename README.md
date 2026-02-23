@@ -349,8 +349,6 @@ For questions about this project, contact any team member or create an issue on 
 
 **Educational Project** - JUNIA ISEN Java 2 Module 2026
 
-This project is developed for educational purposes as part of the Java 2 curriculum.  
-Not for commercial use.
 
 ---
 
