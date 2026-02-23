@@ -15,9 +15,9 @@
 | Name | GitHub | Role |
 |------|--------|------|
 | **Aymeric Droulers** | [@AymericDroulers](https://github.com/AymericDroulers) | 
-| **Salah Eddine Bitti** | [-](https://github.com/Salah-eddine-boudi)  |
-| **Mahmoud Ali El Sayed** | |
-| **Hekla Scheving** |  [-](https://github.com/Heklast) |
+| **Salah Eddine Boudi** | [@Salah-eddine-boudi](https://github.com/Salah-eddine-boudi)  |
+| **Mahmoud Ali El Sayed** |@ |
+| **Hekla Scheving** |  [@Heklast](https://github.com/Heklast) |
 
 **Course:** Java 2 - 2026  
 **Institution:** JUNIA ISEN Engineering School  
@@ -329,77 +329,6 @@ ISEN-Java2-contactapp/
 
 
 
-## 🎓 Learning Outcomes
-
-This project demonstrates mastery of:
-
-✅ **Java Fundamentals**
-- Object-Oriented Programming (OOP)
-- Exception handling
-- Regular expressions
-- Collections (List, ObservableList, FilteredList)
-- Lambda expressions
-
-✅ **JavaFX**
-- FXML layouts
-- Controllers and data binding
-- TableView and form controls
-- Event handling
-- Alerts and dialogs
-- MVC architecture
-
-✅ **Database**
-- JDBC connectivity
-- CRUD operations
-- PreparedStatement (SQL injection prevention)
-- Transaction management
-- SQLite integration
-
-✅ **Testing**
-- JUnit 5 unit tests
-- Test isolation with @BeforeEach
-- AssertJ fluent assertions
-- Database testing strategies
-
-✅ **Build Tools**
-- Maven project structure
-- Dependency management
-- Build lifecycle
-- Plugin configuration
-
-✅ **Version Control**
-- Git workflow
-- .gitignore best practices
-- Collaborative development
-- Commit conventions
-
----
-
-## 📚 Code Quality
-
-### Best Practices Implemented
-
-- ✅ **Try-with-resources** for all JDBC operations
-- ✅ **PreparedStatement** to prevent SQL injection
-- ✅ **Validation in layers** (UI, Model, DAO)
-- ✅ **Encapsulation** (private fields, public methods)
-- ✅ **JavaDoc comments** on public methods
-- ✅ **Consistent naming** (camelCase, PascalCase)
-- ✅ **Exception handling** with user-friendly messages
-- ✅ **Resource cleanup** (connections, statements, result sets)
-- ✅ **Separation of concerns** (MVC pattern)
-- ✅ **No code duplication** (DRY principle)
-
-### Code Metrics
-
-- **Total Lines of Code**: ~1500
-- **Test Coverage**: 9 unit tests
-- **Classes**: 11 (Model: 2, View: 3, Util: 2, Test: 1, Main: 1)
-- **FXML Files**: 3
-- **Maven Dependencies**: 5
-
----
-
 ## 📞 Support & Contact
 
 ### Project Repository
@@ -425,39 +354,6 @@ Not for commercial use.
 
 ---
 
-## 🙏 Acknowledgments
-
-- **JUNIA ISEN** for the comprehensive Java 2 curriculum
-- **Philippe Duval** for guidance and project requirements
-- **JavaFX Community** for excellent documentation
-- **SQLite** for the lightweight database solution
-- **Maven Central** for dependency management
-- **JUnit & AssertJ** teams for testing frameworks
-
----
-
-## 📝 Project Submission Details
-
-**Submission Method**: GitHub Repository  
-**Repository**: https://github.com/AymericDroulers/ISEN-Java2-contactapp  
 
 
-**Submitted Files:**
-- ✅ `pom.xml` - Maven configuration
-- ✅ Java source files - All `.java` classes
-- ✅ FXML resources - All `.fxml` layouts
-- ✅ README.md - This documentation
-- ✅ .gitignore - Git ignore rules
-- ✅ SQL schema - Embedded in `App.java` init()
 
-**NOT Submitted** (as per requirements):
-- ❌ No `.zip` or `.rar` archives
-- ❌ No compiled `.class` files (target/ excluded)
-- ❌ No database files (*.db excluded)
-- ❌ No IDE configuration files (.idea/, .settings/ excluded)
-
----
-
-**Built with ☕ and 💻 by JUNIA ISEN students - 2026**
-
----
