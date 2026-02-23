@@ -1,0 +1,164 @@
+.mainAnchorpane {
+    -fx-background-color: #EEF4FA;
+    -fx-font-family: "Corbel";
+}
+
+.split-pane{
+	-fx-background-color:#EEF4FA;
+}
+
+.label {
+    -fx-text-fill: #22313F;
+}
+
+.titleBox {
+    -fx-background-color: #2c3e50;
+    -fx-alignment: center;
+}
+
+.title {
+    -fx-fill: #FFFFFF;
+    -fx-font-weight: bold;
+}
+
+.listSection {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 0 10 10 0;
+    -fx-effect: dropshadow(gaussian, rgba(18, 38, 63, 0.10), 10, 0.3, 0, 2);
+}
+
+.text-field {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #C9D6E4;
+    -fx-border-width: 1;
+    -fx-padding: 6 10;
+}
+
+.text-field:focused {
+    -fx-border-color: #2c3e50;
+    -fx-background-color: #FFFFFF;
+}
+
+.table-view {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #D6E2EF;
+    -fx-border-width: 1;
+    -fx-background-color: #FFFFFF;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #F4F8FC;
+}
+
+.table-view .column-header {
+    -fx-background-color: #F4F8FC;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell{
+    -fx-background-color: #FFFFFF;
+}
+
+.table-view .scroll-bar {
+    -fx-background-color: #FFFFFF;
+}
+
+.table-view .scroll-bar .track {
+    -fx-background-color: #EEF4FA;
+    -fx-background-radius: 8;
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #2c3e50;
+    -fx-background-radius: 8;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #DCE9F6;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: #1E2A36;
+}
+
+.button {
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-background-color:#D4E4F5;;
+}
+
+.button:hover {
+    -fx-opacity: 0.9;
+	-fx-background-color: #C2D8EE; 
+}
+
+.detailSection {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10 0 0 10;
+    -fx-padding: 10;
+}
+
+.detailSection .label {
+    -fx-text-fill: #22313F;
+}
+
+.date-picker {
+    -fx-background-radius: 8;
+}
+
+.v-box{
+	-fx-background-color: #EEF4FA;
+}
+
+.detailSection .scroll-bar{
+	-fx-background-color: #FFFFFF;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #EEF4FA;
+    -fx-background-radius: 8;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #2c3e50;
+    -fx-background-radius: 8;
+}
+
+.split-pane-divider {
+    -fx-background-color: #EEF4FA;
+}
+
+
+/*Create Person*/
+
+.anchor-pane {
+    -fx-background-color: #EEF4FA;
+    -fx-font-family: "Corbel";
+}
+
+.scroll-pane{
+	-fx-background-color:#EEF4FA;
+}
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.hbox {
+    -fx-background-color: #EEF4FA;
+}
+
+.text {
+    -fx-fill: #2c3e50;
+    -fx-font-weight: bold;
+}
+
+.titleRegion{
+-fx-background-color:#2c3e50;}
+
+
+#successMessage {
+    -fx-text-fill: #2E7D32;
+    -fx-font-weight: bold;
+}

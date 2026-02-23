@@ -9,25 +9,25 @@
             prefHeight="600.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="isen.contactapp.view.CreatePersonController">
+            fx:controller="isen.contactapp.view.CreatePersonController" stylesheets="@contact.css">
 
    <children>
       <VBox spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
             AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
          <!-- Header with Back Button -->
-         <HBox alignment="CENTER">
+         <HBox alignment="CENTER" styleClass="titleRegion">
             <padding>
                <Insets top="20" bottom="10" left="20" right="20"/>
             </padding>
             
             <!-- Back Button (left) -->
             <Button text="← Back" onAction="#handleBackButton" 
-                    style="-fx-font-size: 14; -fx-background-color: #f0f0f0; -fx-cursor: hand;"/>
+                   />
             
             <!-- Title (center) -->
             <Region HBox.hgrow="ALWAYS"/>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create Person" textAlignment="CENTER">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create Person" textAlignment="CENTER" styleClass="title" >
                <font>
                   <Font name="Corbel" size="38.0" />
                </font>
@@ -37,7 +37,7 @@
          </HBox>
 
          <!-- Form -->
-         <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+         <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
             <VBox spacing="15" alignment="CENTER">
                <padding>
                   <Insets top="20" right="40" bottom="40" left="40"/>
@@ -86,7 +86,7 @@
                </VBox>
 
                <!-- Success Message -->
-               <Label fx:id="successMessage" visible="false" style="-fx-text-fill: green; -fx-font-weight: bold;"/>
+               <Label fx:id="successMessage" visible="false" />
 
                <!-- Buttons -->
                <HBox spacing="15" alignment="CENTER">
@@ -96,11 +96,11 @@
                   
                   <Button text="Cancel" onAction="#handleBackButton" 
                           prefWidth="120" prefHeight="40"
-                          style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+                          />
                   
                   <Button text="Save" onAction="#handleSavePersonButton" 
                           prefWidth="120" prefHeight="40"
-                          style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+                         />
                </HBox>
 
             </VBox>

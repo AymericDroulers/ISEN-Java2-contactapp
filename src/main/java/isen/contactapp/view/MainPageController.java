@@ -84,6 +84,7 @@ public class MainPageController {
                     showPersonDetails(newValue);
                 }
             });
+        personTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         // Initial state
         resetView();
