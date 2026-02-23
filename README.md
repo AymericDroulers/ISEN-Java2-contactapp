@@ -12,8 +12,8 @@
 
 ## 👥 Team Members
 
-| Name | GitHub | Role |
-|------|--------|------|
+| Name | GitHub |
+|------|--------|
 | **Aymeric Droulers** | [@AymericDroulers](https://github.com/AymericDroulers) | 
 | **Salah Eddine Boudi** | [@Salah-eddine-boudi](https://github.com/Salah-eddine-boudi)  |
 | **Mahmoud Ali El Sayed** |@ |
