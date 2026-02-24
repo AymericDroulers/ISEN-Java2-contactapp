@@ -84,7 +84,12 @@
                   <Label text="Birthday" />
                   <DatePicker fx:id="dateField" promptText="Select birth date" maxWidth="300"/>
                </VBox>
-               
+               	<!-- Category -->
+				<VBox spacing="5" maxWidth="300">
+				    <Label text="Category" />
+				    <ComboBox fx:id="categoryField" maxWidth="300" promptText="Select category" />
+				</VBox>
+				               
                <!-- Buttons -->
                <HBox spacing="15" alignment="CENTER">
                   <VBox.margin>

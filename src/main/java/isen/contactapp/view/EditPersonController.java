@@ -5,16 +5,16 @@ import isen.contactapp.model.Person;
 import isen.contactapp.model.PersonDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
 /**
- * Controller for editing an existing person. EditPersonController → Page séparée (DISPONIBLE, pas utilisé)
+ * Controller for editing an existing person.
+ * Note: Currently not used - in-place editing is preferred in MainPageController.
  */
-
-
 public class EditPersonController {
     
     @FXML private TextField lastNameField;
@@ -24,12 +24,15 @@ public class EditPersonController {
     @FXML private TextField addressField;
     @FXML private TextField emailAddressField;
     @FXML private DatePicker dateField;
+    @FXML private ComboBox<String> categoryField;
     
     private Person person;
     private final PersonDao personDao = new PersonDao("jdbc:sqlite:sqlite.db");
     
     /**
      * Sets the person to edit and fills the form with their data.
+     * 
+     * @param person The person to edit
      */
     public void setPerson(Person person) {
         this.person = person;
@@ -42,6 +45,7 @@ public class EditPersonController {
             addressField.setText(person.getAddress());
             emailAddressField.setText(person.getEmailAddress());
             dateField.setValue(person.getBirthDate());
+            categoryField.setValue(person.getCategory());
         }
     }
     
@@ -56,7 +60,6 @@ public class EditPersonController {
         }
         
         try {
-            
             person.setLastName(lastNameField.getText().trim());
             person.setFirstName(firstNameField.getText().trim());
             person.setNickName(nicknameField.getText().trim());
@@ -65,6 +68,11 @@ public class EditPersonController {
             person.setEmailAddress(emailAddressField.getText().trim());
             person.setBirthDate(dateField.getValue());
             
+            String category = categoryField.getValue();
+            if (category == null || category.isEmpty()) {
+                category = "Other";
+            }
+            person.setCategory(category);
             
             if (person.getLastName().isEmpty() || 
                 person.getFirstName().isEmpty() || 
@@ -83,6 +91,7 @@ public class EditPersonController {
             e.printStackTrace();
         }
     }
+    
     /**
      * Returns to the main page without saving.
      */
@@ -96,7 +105,10 @@ public class EditPersonController {
     }
     
     /**
-     * Shows an alert dialog with the given title and message.
+     * Displays an alert dialog.
+     * 
+     * @param title Dialog title
+     * @param message Dialog message
      */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -104,5 +116,21 @@ public class EditPersonController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * Initializes the controller.
+     */
+    @FXML
+    private void initialize() {
+        categoryField.getItems().addAll("Friend", "Family", "Work", "Other");
     }
 }

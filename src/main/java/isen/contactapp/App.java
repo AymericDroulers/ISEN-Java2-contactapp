@@ -18,29 +18,18 @@ import java.util.List;
 
 public class App extends Application {
     
-   
-    
-  
     private static Scene scene;
-    
-   
     private static PersonDao personDao;
-    
-   
     private static Person selectedPerson;
-
     
-   
+    
     @Override
     public void init() {
-       
         personDao = new PersonDao("jdbc:sqlite:sqlite.db");
         
-     
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlite.db");
              Statement statement = connection.createStatement()) {
             
-          
             statement.executeUpdate(
                 "CREATE TABLE IF NOT EXISTS person (" +
                 "idperson INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
@@ -50,56 +39,50 @@ public class App extends Application {
                 "phone_number VARCHAR(15) NULL," +
                 "address VARCHAR(200) NULL," +
                 "email_address VARCHAR(150) NULL," +
-                "birth_date DATE NULL" +
+                "birth_date DATE NULL," +
+                "category VARCHAR(20) DEFAULT 'Other'" +
                 ");"
             );
             
-            
-           
             List<Person> existingPersons = personDao.getAllPersons();
             
             if (existingPersons.isEmpty()) {
-         
                 statement.executeUpdate(
                     "INSERT INTO person(" +
-                    "lastname, firstname, nickname, phone_number, address, email_address, birth_date" +
+                    "lastname, firstname, nickname, phone_number, address, email_address, birth_date, category" +
                     ") VALUES (" +
                     "'Droulers', 'Aymeric', 'Riric', '0612345678', " +
-                    "'42 bvd Vauban', 'aymeric.droulers@student.junia.com', '2004-12-29'" +
+                    "'42 bvd Vauban', 'aymeric.droulers@student.junia.com', '2004-12-29', 'Friend'" +
                     ");"
                 );
                 
-                System.out.println(" Demo data inserted");
+                System.out.println("✅ Demo data inserted");
             } else {
-                System.out.println(" Database already contains " + existingPersons.size() + " person(s)");
+                System.out.println("✅ Database already contains " + existingPersons.size() + " person(s)");
             }
             
         } catch (SQLException e) {
-            
-            System.err.println(" Database initialization failed: " + e.getMessage());
+            System.err.println("❌ Database initialization failed: " + e.getMessage());
             throw new RuntimeException("Failed to initialize database", e);
         }
         
-       
         List<Person> personList = personDao.getAllPersons();
-        System.out.println(" Total persons in database: " + personList.size());
+        System.out.println("📊 Total persons in database: " + personList.size());
     }
     
     
     @Override
     public void start(Stage stage) throws IOException {
-      
         scene = new Scene(loadFXML("view/Main-page"), 640, 480);
-        
         
         stage.setScene(scene);
         stage.setTitle("Contact App");
         stage.show();
         
-        System.out.println(" Application started");
+        System.out.println("✅ Application started");
     }
-
   
+   
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
@@ -109,21 +92,17 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-
-
-    
-    
+  
     public static void setSelectedPerson(Person person) {
         selectedPerson = person;
     }
     
-  
+   
     public static Person getSelectedPerson() {
         return selectedPerson;
     }
-
     
- 
+
     public static void main(String[] args) {
         launch();
     }

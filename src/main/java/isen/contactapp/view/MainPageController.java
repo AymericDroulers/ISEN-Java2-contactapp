@@ -4,13 +4,13 @@ import isen.contactapp.App;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import isen.contactapp.model.Person;
 import isen.contactapp.model.PersonDao;
 import isen.contactapp.util.PersonValueFactory;
 import isen.contactapp.util.PersonChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,11 +21,10 @@ import java.io.IOException;
 
 /**
  * Controller for the main page.
- * Handles display and navigation to CRUD pages.
+ * Handles person listing, search, and in-place editing.
  */
 public class MainPageController {
 
-    // ========== FXML Components ==========
     @FXML public AnchorPane formPane;
     @FXML public TextField lastNameField;
     @FXML public TextField firstNameField;
@@ -34,31 +33,28 @@ public class MainPageController {
     @FXML public TextField emailAddressField;
     @FXML public TextField phoneNumberField;
     @FXML public DatePicker dateField;
+    @FXML public ComboBox<String> categoryField;
     @FXML public TableView<Person> personTable;
     @FXML public TableColumn<Person, String> personColumn;
     @FXML public TextField searchField;
 
-    // ========== Private Fields ==========
     private Person currentPerson;
     private final PersonDao personDao = new PersonDao("jdbc:sqlite:sqlite.db");
     private ObservableList<Person> masterList = FXCollections.observableArrayList();
     private FilteredList<Person> filteredList;
 
-    // ========== Initialization ==========
-    
     /**
      * Initializes the controller.
      * Called automatically after FXML loading.
      */
     @FXML
     private void initialize() {
-        // Configure table column
         personColumn.setCellValueFactory(new PersonValueFactory());
         
-        // Load data
+        categoryField.getItems().addAll("Friend", "Family", "Work", "Other");
+        
         populateList();
         
-        //search bar
         filteredList = new FilteredList<>(masterList, person -> true);
 
         searchField.textProperty().addListener((obs, oldVal, newVal) -> {
@@ -73,9 +69,9 @@ public class MainPageController {
                 return fn.contains(filter) || ln.contains(filter);
             });
         });
+        
         personTable.setItems(filteredList);
         
-        // Setup selection listener
         personTable.getSelectionModel()
             .selectedItemProperty()
             .addListener(new PersonChangeListener() {
@@ -84,14 +80,12 @@ public class MainPageController {
                     showPersonDetails(newValue);
                 }
             });
+        
         personTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        // Initial state
         resetView();
     }
 
-    // ========== Button Handlers ==========
-    
     /**
      * Opens the create person page.
      */
@@ -106,7 +100,7 @@ public class MainPageController {
     }
 
     /**
-     * Opens the edit person page for the selected person.
+     * Saves the edited person to the database.
      */
     @FXML
     private void handleSaveButton() {
@@ -116,7 +110,6 @@ public class MainPageController {
         }
         
         try {
-            // Update person with values from form fields
             currentPerson.setLastName(lastNameField.getText().trim());
             currentPerson.setFirstName(firstNameField.getText().trim());
             currentPerson.setNickName(nicknameField.getText().trim());
@@ -124,8 +117,8 @@ public class MainPageController {
             currentPerson.setAddress(addressField.getText().trim());
             currentPerson.setEmailAddress(emailAddressField.getText().trim());
             currentPerson.setBirthDate(dateField.getValue());
+            currentPerson.setCategory(categoryField.getValue());
             
-            // Validate required fields
             if (currentPerson.getLastName().isEmpty() || 
                 currentPerson.getFirstName().isEmpty() || 
                 currentPerson.getNickName().isEmpty()) {
@@ -133,14 +126,14 @@ public class MainPageController {
                 return;
             }
             
-            // Save to database
             personDao.updatePerson(currentPerson);
             
-            // Show success message
             showAlert("Success", currentPerson.getFullName() + " has been updated successfully!");
+            categoryField.setValue(currentPerson.getCategory());
             
-            // Refresh the list
             populateList();
+            
+            filteredList = new FilteredList<>(masterList, person -> true);
             
         } catch (Exception e) {
             showAlert("Error", "Failed to update person: " + e.getMessage());
@@ -156,10 +149,9 @@ public class MainPageController {
         showAlert("Not Implemented", "Delete functionality will be added later.");
     }
 
-    // ========== View Management ==========
-    
     /**
      * Displays the details of the selected person in the form.
+     * 
      * @param person The person to display, or null to hide the form
      */
     @FXML
@@ -170,7 +162,6 @@ public class MainPageController {
             formPane.setVisible(true);
             currentPerson = person;
             
-            // Populate fields with person data (read-only display)
             lastNameField.setText(currentPerson.getLastName());
             firstNameField.setText(currentPerson.getFirstName());
             nicknameField.setText(currentPerson.getNickName());
@@ -178,8 +169,8 @@ public class MainPageController {
             emailAddressField.setText(currentPerson.getEmailAddress());
             phoneNumberField.setText(currentPerson.getPhoneNumber());
             dateField.setValue(currentPerson.getBirthDate());
+            categoryField.setValue(currentPerson.getCategory());
             
-            // Make fields editable (allow editing)
             setFieldsEditable(true);
         }
     }
@@ -195,6 +186,7 @@ public class MainPageController {
 
     /**
      * Sets whether the form fields are editable.
+     * 
      * @param editable true to allow editing, false to disable
      */
     private void setFieldsEditable(boolean editable) {
@@ -205,10 +197,9 @@ public class MainPageController {
         emailAddressField.setEditable(editable);
         phoneNumberField.setEditable(editable);
         dateField.setEditable(editable);
+        categoryField.setDisable(!editable);
     }
 
-    // ========== Data Management ==========
-    
     /**
      * Populates the table with all persons from the database.
      */
@@ -224,7 +215,7 @@ public class MainPageController {
     }
 
     /**
-     * Updates the person list (same as populateList).
+     * Updates the person list.
      */
     @FXML
     public void updatePersonList() {
@@ -240,10 +231,9 @@ public class MainPageController {
         personTable.getSelectionModel().clearSelection();
     }
 
-    // ========== Alert Dialogs ==========
-    
     /**
-     * Displays an alert dialog with the given title and message.
+     * Displays an alert dialog.
+     * 
      * @param title Dialog title
      * @param message Dialog message
      */

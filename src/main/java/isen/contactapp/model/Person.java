@@ -13,8 +13,9 @@ public class Person {
     private String address;
     private String emailAddress;
     private LocalDate birthDate;
+    private String category;
 
-    public Person(int idPerson, String lastname, String firstname, String nickname, String phoneNumber, String address, String emailAddress, LocalDate birthDate) {
+    public Person(int idPerson, String lastname, String firstname, String nickname, String phoneNumber, String address, String emailAddress, LocalDate birthDate ,String	category) {
         this.idPerson = idPerson;
         this.lastName = lastname;
         this.firstName = firstname;
@@ -23,6 +24,7 @@ public class Person {
         this.address = address;
         this.emailAddress = emailAddress;
         this.birthDate = birthDate;
+        this.category = category != null ? category : "Other";
     }
     
     public Person(){}
@@ -156,4 +158,31 @@ public class Person {
     public String getFullName() {
         return firstName + " " + lastName;
     }
+    
+    
+    
+    
+    public String getCategory() {
+        return category;
+    }
+
+    
+    public void setCategory(String category) {
+        if (category == null || category.isBlank()) {
+            this.category = "Other";
+        } else {
+            this.category = category;
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

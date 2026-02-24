@@ -4,6 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
             prefHeight="600.0" prefWidth="600.0"
@@ -84,7 +86,11 @@
                   <Label text="Birthday" />
                   <DatePicker fx:id="dateField" promptText="Select birth date" maxWidth="300"/>
                </VBox>
-
+				<!-- Category -->
+				<VBox spacing="5">
+				    <Label text="Category" />
+				    <ComboBox fx:id="categoryField" maxWidth="Infinity" promptText="Select category" />
+				</VBox>
                <!-- Success Message -->
                <Label fx:id="successMessage" visible="false" />
 

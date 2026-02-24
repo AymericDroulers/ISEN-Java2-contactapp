@@ -33,8 +33,10 @@ public class PersonDaoTestCase {
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
              Statement statement = connection.createStatement()) {
             
+            statement.executeUpdate("DROP TABLE IF EXISTS person");
+            
             statement.executeUpdate(
-                "CREATE TABLE IF NOT EXISTS person (" +
+                "CREATE TABLE person (" +
                 "idperson INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "lastname VARCHAR(45) NOT NULL," +
                 "firstname VARCHAR(45) NOT NULL," +
@@ -42,19 +44,19 @@ public class PersonDaoTestCase {
                 "phone_number VARCHAR(15) NULL," +
                 "address VARCHAR(200) NULL," +
                 "email_address VARCHAR(150) NULL," +
-                "birth_date DATE NULL);"
-            );
-            
-            statement.executeUpdate("DELETE FROM person");
-            
-            statement.executeUpdate(
-                "INSERT INTO person(lastname, firstname, nickname, phone_number, address, email_address, birth_date) " +
-                "VALUES ('Droulers', 'Aymeric', 'Riric', '0612345678', '42 bvd Vauban', 'aymeric.droulers@student.junia.com', '2004-12-29');"
+                "birth_date DATE NULL," +
+                "category VARCHAR(20) DEFAULT 'Other'" +
+                ");"
             );
             
             statement.executeUpdate(
-                "INSERT INTO person(lastname, firstname, nickname, phone_number, address, email_address, birth_date) " +
-                "VALUES ('Dupont', 'Lucas', 'Ludu', '0612345678', '43 bvd Vauban', 'ludu@ik.me', '1985-06-06');"
+                "INSERT INTO person(lastname, firstname, nickname, phone_number, address, email_address, birth_date, category) " +
+                "VALUES ('Droulers', 'Aymeric', 'Riric', '0612345678', '42 bvd Vauban', 'aymeric.droulers@student.junia.com', '2004-12-29', 'Friend');"
+            );
+            
+            statement.executeUpdate(
+                "INSERT INTO person(lastname, firstname, nickname, phone_number, address, email_address, birth_date, category) " +
+                "VALUES ('Dupont', 'Lucas', 'Ludu', '0612345678', '43 bvd Vauban', 'ludu@ik.me', '1985-06-06', 'Work');"
             );
         }
     }
@@ -75,12 +77,13 @@ public class PersonDaoTestCase {
             Person::getPhoneNumber,
             Person::getAddress,
             Person::getEmailAddress,
-            Person::getBirthDate
+            Person::getBirthDate,
+            Person::getCategory
         ).containsOnly(
             tuple("Droulers", "Aymeric", "Riric", "0612345678", "42 bvd Vauban", 
-                  "aymeric.droulers@student.junia.com", LocalDate.of(2004, 12, 29)),
+                  "aymeric.droulers@student.junia.com", LocalDate.of(2004, 12, 29), "Friend"),
             tuple("Dupont", "Lucas", "Ludu", "0612345678", "43 bvd Vauban", 
-                  "ludu@ik.me", LocalDate.of(1985, 6, 6))
+                  "ludu@ik.me", LocalDate.of(1985, 6, 6), "Work")
         );
     }
 
@@ -90,8 +93,8 @@ public class PersonDaoTestCase {
      */
     @Test
     public void shouldCreatePerson() throws SQLException {
-        Person person = new Person(2, "Scheving", "Hekla", "Hekli", "83902302", 
-                                   "Lille", "hekla@gmail.com", LocalDate.of(2001, 9, 22));
+        Person person = new Person(0, "Scheving", "Hekla", "Hekli", "83902302", 
+                                   "Lille", "hekla@gmail.com", LocalDate.of(2001, 9, 22), "Family");
         personDao.createPerson(person);
 
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
@@ -101,6 +104,7 @@ public class PersonDaoTestCase {
             assertThat(resultSet.next()).isTrue();
             assertThat(resultSet.getInt("idPerson")).isNotNull();
             assertThat(resultSet.getString("firstname")).isEqualTo("Hekla");
+            assertThat(resultSet.getString("category")).isEqualTo("Family");
             assertThat(resultSet.next()).isFalse();
         }
     }
@@ -119,6 +123,7 @@ public class PersonDaoTestCase {
         personToUpdate.setNickName("Riric2");
         personToUpdate.setPhoneNumber("0698765432");
         personToUpdate.setEmailAddress("aymeric.updated@junia.com");
+        personToUpdate.setCategory("Family");
 
         personDao.updatePerson(personToUpdate);
 
@@ -132,6 +137,7 @@ public class PersonDaoTestCase {
             assertThat(resultSet.getString("nickname")).isEqualTo("Riric2");
             assertThat(resultSet.getString("phone_number")).isEqualTo("0698765432");
             assertThat(resultSet.getString("email_address")).isEqualTo("aymeric.updated@junia.com");
+            assertThat(resultSet.getString("category")).isEqualTo("Family");
             assertThat(resultSet.getString("lastname")).isEqualTo("Droulers");
             assertThat(resultSet.next()).isFalse();
         }
@@ -167,6 +173,7 @@ public class PersonDaoTestCase {
             assertThat(resultSet.getString("lastname")).isEqualTo("Dupont");
             assertThat(resultSet.getString("firstname")).isEqualTo("Lucas");
             assertThat(resultSet.getString("nickname")).isEqualTo("Ludu");
+            assertThat(resultSet.getString("category")).isEqualTo("Work");
         }
     }
 
@@ -204,7 +211,7 @@ public class PersonDaoTestCase {
      */
     @Test
     public void shouldThrowExceptionWhenUpdatingNonExistentPerson() {
-        Person fakePerson = new Person(99999, "Ghost", "Phantom", "Boo", null, null, null, null);
+        Person fakePerson = new Person(99999, "Ghost", "Phantom", "Boo", null, null, null, null, "Other");
 
         org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
             personDao.updatePerson(fakePerson);
@@ -258,6 +265,7 @@ public class PersonDaoTestCase {
         assertThat(retrievedPerson.getLastName()).isEqualTo("Droulers");
         assertThat(retrievedPerson.getFirstName()).isEqualTo("Aymeric");
         assertThat(retrievedPerson.getNickName()).isEqualTo("Riric");
+        assertThat(retrievedPerson.getCategory()).isEqualTo("Friend");
     }
 
     /**
@@ -303,5 +311,51 @@ public class PersonDaoTestCase {
         org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
             personDao.deletePerson(99999);
         });
+    }
+    
+    /**
+     * Tests category default value.
+     * Verifies that category defaults to "Other" when null.
+     */
+    @Test
+    public void shouldDefaultCategoryToOther() throws SQLException {
+        Person person = new Person(0, "Test", "User", "Testy", null, null, null, null, null);
+        Person created = personDao.createPerson(person);
+
+        assertThat(created.getCategory()).isEqualTo("Other");
+
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM person WHERE lastname='Test'")) {
+            
+            assertThat(resultSet.next()).isTrue();
+            assertThat(resultSet.getString("category")).isEqualTo("Other");
+        }
+    }
+    
+    /**
+     * Tests category update.
+     * Verifies that category can be updated to all valid values.
+     */
+    @Test
+    public void shouldUpdateCategory() throws SQLException {
+        List<Person> persons = personDao.getAllPersons();
+        Person person = persons.get(0);
+        int originalId = person.getIdPerson();
+
+        String[] categories = {"Friend", "Family", "Work", "Other"};
+        
+        for (String category : categories) {
+            person.setCategory(category);
+            personDao.updatePerson(person);
+
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sqlitetest.db");
+                 Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery("SELECT category FROM person WHERE idperson=" + originalId)) {
+                
+                assertThat(resultSet.next()).isTrue();
+                assertThat(resultSet.getString("category")).isEqualTo(category);
+            }
+        }
     }
 }

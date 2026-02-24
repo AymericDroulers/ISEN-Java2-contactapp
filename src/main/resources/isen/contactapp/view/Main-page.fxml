@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -101,7 +103,12 @@
                     <Label text="Birth Date" />
                     <DatePicker fx:id="dateField" maxWidth="Infinity" promptText="Select birth date" />
                  </VBox>
-                 
+                 	<!-- Category -->
+					<!-- Category -->
+					<VBox spacing="5">
+					    <Label text="Category" />
+					    <ComboBox fx:id="categoryField" maxWidth="Infinity" promptText="Select category" />
+					</VBox>
                  <!-- Spacer -->
                  <Region minHeight="20" />
                  
