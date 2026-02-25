@@ -7,7 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
-public class PersonValueFactory
+public class PersonLastNameValueFactory
 		implements Callback<TableColumn.CellDataFeatures<Person, String>, ObservableValue<String>> {
 
 	@Override

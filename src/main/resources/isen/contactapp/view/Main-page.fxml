@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -9,8 +10,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -44,14 +43,15 @@
               <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="People" />
               <TextField fx:id="searchField" promptText="Search..." />
               <ComboBox fx:id="categoryFilterField" promptText="Filter by category" />
-              <TableView fx:id="personTable" VBox.vgrow="ALWAYS" >
+              <TableView fx:id="personTable" VBox.vgrow="ALWAYS">
                 <columns>
-                  <TableColumn fx:id="personColumn" maxWidth="1.7976931348623157E308" text="Name" />
+                   <TableColumn fx:id="personLastNameColumn"  text="Last Name" />
+                   <TableColumn fx:id="personFirstNameColumn" text="First Name" />
                 </columns>
               </TableView>
               
-              <Button maxWidth="Infinity" onAction="#handleCreatePersonButton" text="Add New Person"/>
-              <Button maxWidth="Infinity" onAction="#handleExportButton" text="Export (CSV)"/>
+              <Button maxWidth="Infinity" onAction="#handleCreatePersonButton" text="Add New Person" />
+              <Button maxWidth="Infinity" onAction="#handleExportButton" text="Export (CSV)" />
            </VBox>
         </AnchorPane>
         

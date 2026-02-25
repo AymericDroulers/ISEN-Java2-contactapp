@@ -1,12 +1,13 @@
 package isen.contactapp.view;
 
 import isen.contactapp.App;
+import isen.contactapp.util.PersonFirstNameValueFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import isen.contactapp.model.Person;
 import isen.contactapp.model.PersonDao;
-import isen.contactapp.util.PersonValueFactory;
+import isen.contactapp.util.PersonLastNameValueFactory;
 import isen.contactapp.util.PersonChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -40,7 +41,8 @@ public class MainPageController {
     @FXML public DatePicker dateField;
     @FXML public ComboBox<String> categoryField;
     @FXML public TableView<Person> personTable;
-    @FXML public TableColumn<Person, String> personColumn;
+    @FXML public TableColumn<Person, String> personLastNameColumn;
+    @FXML public TableColumn<Person, String> personFirstNameColumn;
     @FXML public TextField searchField;
     @FXML public ComboBox<String> categoryFilterField;
 
@@ -56,7 +58,8 @@ public class MainPageController {
     @FXML
     private void initialize() {
 
-        personColumn.setCellValueFactory(new PersonValueFactory());
+        personLastNameColumn.setCellValueFactory(new PersonLastNameValueFactory());
+        personFirstNameColumn.setCellValueFactory(new PersonFirstNameValueFactory());
 
         categoryField.getItems().addAll("Friend", "Family", "Work", "Other");
 
