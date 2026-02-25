@@ -43,6 +43,7 @@
               
               <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="People" />
               <TextField fx:id="searchField" promptText="Search..." />
+              <ComboBox fx:id="categoryFilterField" promptText="Filter by category" />
               <TableView fx:id="personTable" VBox.vgrow="ALWAYS" >
                 <columns>
                   <TableColumn fx:id="personColumn" maxWidth="1.7976931348623157E308" text="Name" />
@@ -50,6 +51,7 @@
               </TableView>
               
               <Button maxWidth="Infinity" onAction="#handleCreatePersonButton" text="Add New Person"/>
+              <Button maxWidth="Infinity" onAction="#handleExportButton" text="Export (CSV)"/>
            </VBox>
         </AnchorPane>
         
