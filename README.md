@@ -36,8 +36,6 @@
 - Update existing person data (in-place editing)
 - Real-time search by name
 - Field validation (required fields, email format, phone format)
-
-⏳ **In Progress:**
 - Delete person functionality
 
 ### Non-Functional Requirements
@@ -45,7 +43,7 @@
 ✅ **Completed:**
 - Maven project structure
 - SQLite database integration
-- Unit tests for DAO methods (9 tests)
+- Unit tests for DAO methods (13 tests)
 - JavaFX GUI implementation
 - MVC architecture
 - Resource management (try-with-resources)
@@ -153,19 +151,22 @@ mvn test
 
 ### Test Coverage
 
-**9 comprehensive tests** covering:
+**13 comprehensive tests** covering:
 
-| Test | Description |
-|------|-------------|
-| `shouldListPersons` | Verify listing all persons |
-| `shouldCreatePerson` | Test person creation |
-| `shouldUpdatePerson` | Test person update |
-| `shouldUpdatePersonWithNullValues` | Test null handling in updates |
-| `shouldUpdateOnlyTargetedPerson` | Verify update isolation |
-| `shouldThrowExceptionWhenUpdatingNonExistentPerson` | Test error handling |
-| `shouldUpdatePersonMultipleTimes` | Test multiple updates |
-| `shouldGetPersonById` | Test retrieval by ID |
-| `shouldDeletePerson` | Test deletion |
+| Test                                                | Description                                |
+|-----------------------------------------------------|--------------------------------------------|
+| `shouldListPersons`                                 | Verify listing all persons                 |
+| `shouldCreatePerson`                                | Test person creation                       |
+| `shouldUpdatePerson`                                | Test person update                         |
+| `shouldUpdatePersonWithNullValues`                  | Test null handling in updates              |
+| `shouldUpdateOnlyTargetedPerson`                    | Verify update isolation                    |
+| `shouldThrowExceptionWhenUpdatingNonExistentPerson` | Test error handling                        |
+| `shouldUpdatePersonMultipleTimes`                   | Test multiple updates                      |
+| `shouldGetPersonById`                               | Test retrieval by ID                       |
+| `shouldDeletePerson`                                | Test deletion                              |
+| `shouldUpdateCategory`                              | Test category update                       |
+| `shouldReturnNullWhenPersonNotFound`                | Test getting a person with non-existent ID |
+| `shouldDefaultCategoryToOther`                      | Test default category is other             |
 
 **All tests use:**
 - Separate test database (`sqlitetest.db`)
@@ -280,13 +281,12 @@ ISEN-Java2-contactapp/
 
 ### Editing a Contact
 
-**Method 1: In-place editing (Quick)**
+
 1. Select a person from the list
 2. Edit fields directly in the detail panel
 3. Click **"Save"** to update
 
-**Method 2: Edit page (Not implemented)**
-- Future feature
+
 
 ### Searching Contacts
 
@@ -297,7 +297,9 @@ ISEN-Java2-contactapp/
 
 ### Deleting a Contact
 
-⏳ **Coming soon** - Delete functionality is planned but not yet implemented
+- Select a person from the list
+- Click **"Delete"** button
+- Confirm you want to delete the person
 
 ---
 

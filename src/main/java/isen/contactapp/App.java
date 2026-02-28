@@ -92,15 +92,7 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
-  
-    public static void setSelectedPerson(Person person) {
-        selectedPerson = person;
-    }
-    
-   
-    public static Person getSelectedPerson() {
-        return selectedPerson;
-    }
+
     
 
     public static void main(String[] args) {

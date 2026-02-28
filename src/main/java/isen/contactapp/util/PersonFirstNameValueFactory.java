@@ -11,7 +11,6 @@ public class PersonFirstNameValueFactory
 
 	@Override
 	public ObservableValue<String> call(CellDataFeatures<Person, String> cellData) {
-		System.out.println("FirstName = " + cellData.getValue().getFirstName());
 		return new SimpleStringProperty(cellData.getValue().getFirstName());
 	}
 }

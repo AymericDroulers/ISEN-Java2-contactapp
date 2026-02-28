@@ -48,7 +48,7 @@ public class MainPageController {
 
     private Person currentPerson;
     private final PersonDao personDao = new PersonDao("jdbc:sqlite:sqlite.db");
-    private ObservableList<Person> masterList = FXCollections.observableArrayList();
+    private final ObservableList<Person> masterList = FXCollections.observableArrayList();
     private FilteredList<Person> filteredList;
 
     /**
@@ -205,6 +205,15 @@ public class MainPageController {
         }
         
         try {
+
+            if (
+                    currentPerson.getLastName().isEmpty() ||
+                    currentPerson.getFirstName().isEmpty() ||
+                    currentPerson.getNickName().isEmpty()
+            ) {
+                showAlert("Invalid Input", "Last name, first name, and nickname are required.");
+                return;
+            }
             currentPerson.setLastName(lastNameField.getText().trim());
             currentPerson.setFirstName(firstNameField.getText().trim());
             currentPerson.setNickName(nicknameField.getText().trim());
@@ -214,12 +223,7 @@ public class MainPageController {
             currentPerson.setBirthDate(dateField.getValue());
             currentPerson.setCategory(categoryField.getValue());
             
-            if (currentPerson.getLastName().isEmpty() || 
-                currentPerson.getFirstName().isEmpty() || 
-                currentPerson.getNickName().isEmpty()) {
-                showAlert("Invalid Input", "Last name, first name, and nickname are required.");
-                return;
-            }
+
             
             personDao.updatePerson(currentPerson);
             
@@ -290,9 +294,9 @@ public class MainPageController {
             lastNameField.setText(currentPerson.getLastName());
             firstNameField.setText(currentPerson.getFirstName());
             nicknameField.setText(currentPerson.getNickName());
-            addressField.setText(currentPerson.getAddress());
-            emailAddressField.setText(currentPerson.getEmailAddress());
-            phoneNumberField.setText(currentPerson.getPhoneNumber());
+            addressField.setText(currentPerson.getAddress()==null?"":currentPerson.getAddress());
+            emailAddressField.setText(currentPerson.getEmailAddress()==null?"":currentPerson.getEmailAddress());
+            phoneNumberField.setText(currentPerson.getPhoneNumber()==null?"":currentPerson.getPhoneNumber());
             dateField.setValue(currentPerson.getBirthDate());
             categoryField.setValue(currentPerson.getCategory());
             

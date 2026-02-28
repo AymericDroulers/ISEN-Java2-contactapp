@@ -36,47 +36,19 @@ public class PersonDao {
         
         try (Connection connection = DriverManager.getConnection(url);
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            
-            statement.setString(1, person.getLastName());
-            statement.setString(2, person.getFirstName());
-            statement.setString(3, person.getNickName());
-            
-            if (person.getPhoneNumber() != null && !person.getPhoneNumber().isBlank()) {
-                statement.setString(4, person.getPhoneNumber());
-            } else {
-                statement.setNull(4, Types.VARCHAR);
-            }
-            
-            if (person.getAddress() != null && !person.getAddress().isBlank()) {
-                statement.setString(5, person.getAddress());
-            } else {
-                statement.setNull(5, Types.VARCHAR);
-            }
-            
-            if (person.getEmailAddress() != null && !person.getEmailAddress().isBlank()) {
-                statement.setString(6, person.getEmailAddress());
-            } else {
-                statement.setNull(6, Types.VARCHAR);
-            }
-            
-            if (person.getBirthDate() != null) {
-                statement.setDate(7, Date.valueOf(person.getBirthDate()));
-            } else {
-                statement.setNull(7, Types.DATE);
-            }
-            
+
+            setStatementValues(person, statement);
             String category = person.getCategory();
             if (category == null || category.isBlank()) {
                 category = "Other";
             }
-            statement.setString(8, category);
-            
+
             statement.executeUpdate();
             
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int generatedId = generatedKeys.getInt(1);
-                    
+
                     return new Person(
                         generatedId,
                         person.getLastName(),
@@ -97,6 +69,7 @@ public class PersonDao {
             throw new RuntimeException("Failed to create person: " + e.getMessage(), e);
         }
     }
+
 
     /**
      * Retrieves all persons from the database.
@@ -164,39 +137,7 @@ public class PersonDao {
         try (Connection connection = DriverManager.getConnection(url);
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, person.getLastName());
-            statement.setString(2, person.getFirstName());
-            statement.setString(3, person.getNickName());
-            
-            if (person.getPhoneNumber() != null && !person.getPhoneNumber().isBlank()) {
-                statement.setString(4, person.getPhoneNumber());
-            } else {
-                statement.setNull(4, Types.VARCHAR);
-            }
-            
-            if (person.getAddress() != null && !person.getAddress().isBlank()) {
-                statement.setString(5, person.getAddress());
-            } else {
-                statement.setNull(5, Types.VARCHAR);
-            }
-            
-            if (person.getEmailAddress() != null && !person.getEmailAddress().isBlank()) {
-                statement.setString(6, person.getEmailAddress());
-            } else {
-                statement.setNull(6, Types.VARCHAR);
-            }
-            
-            if (person.getBirthDate() != null) {
-                statement.setDate(7, Date.valueOf(person.getBirthDate()));
-            } else {
-                statement.setNull(7, Types.DATE);
-            }
-            
-            String category = person.getCategory();
-            if (category == null || category.isBlank()) {
-                category = "Other";
-            }
-            statement.setString(8, category);
+            setStatementValues(person, statement);
 
             statement.setInt(9, person.getIdPerson());
 
@@ -276,4 +217,48 @@ public class PersonDao {
             throw new RuntimeException("Failed to delete person: " + e.getMessage(), e);
         }
     }
+
+
+    /**
+     * Set the values of a create or update statement from Person object
+     *
+     * @param person the person data
+     * @param statement the create or update statement
+     * */
+    private void setStatementValues(Person person, PreparedStatement statement) throws SQLException {
+        statement.setString(1, person.getLastName());
+        statement.setString(2, person.getFirstName());
+        statement.setString(3, person.getNickName());
+
+        if (person.getPhoneNumber() != null && !person.getPhoneNumber().isBlank()) {
+            statement.setString(4, person.getPhoneNumber());
+        } else {
+            statement.setNull(4, Types.VARCHAR);
+        }
+
+        if (person.getAddress() != null && !person.getAddress().isBlank()) {
+            statement.setString(5, person.getAddress());
+        } else {
+            statement.setNull(5, Types.VARCHAR);
+        }
+
+        if (person.getEmailAddress() != null && !person.getEmailAddress().isBlank()) {
+            statement.setString(6, person.getEmailAddress());
+        } else {
+            statement.setNull(6, Types.VARCHAR);
+        }
+
+        if (person.getBirthDate() != null) {
+            statement.setDate(7, Date.valueOf(person.getBirthDate()));
+        } else {
+            statement.setNull(7, Types.DATE);
+        }
+
+        String category = person.getCategory();
+        if (category == null || category.isBlank()) {
+            category = "Other";
+        }
+        statement.setString(8, category);
+    }
+
 }
